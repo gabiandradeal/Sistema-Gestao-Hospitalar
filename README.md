@@ -1,5 +1,5 @@
 ## 🏥 Sistema de Gestão Hospitalar
-Sistema de gerenciamento hospitalar desenvolvido para a disciplina de Estrutura de Dados.
+Projeto desenvolvido para a disciplina de Estrutura de Dados.
 Nosso sistema não é apenas um código isolado; ele simula a vida real. Usamos a AVL para busca eficiente, a Hash para o estoque, e a Heap para salvar vidas priorizando quem mais precisa, enquanto a Fila de duas pilhas organiza o fluxo burocrático da triagem.
 
 ## ⚙️ Núcleo do Sistema
