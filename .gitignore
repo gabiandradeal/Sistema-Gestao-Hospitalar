@@ -1,0 +1,9 @@
+# Configurações de IDEs (IntelliJ, VS Code, Eclipse)
+.idea/
+.vscode/
+*.iml
+bin/
+out/
+# Arquivos de Sistema
+.DS_Store
+Thumbs.db
