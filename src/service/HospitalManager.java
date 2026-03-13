@@ -2,7 +2,6 @@ package service;
 
 import model.Paciente;
 import model.NivelUrgencia;
-import structures.interfaces.*;
 
 /**
  * Classe responsável pela integração das estruturas de dados e gerenciamento do fluxo hospitalar.
@@ -43,12 +42,12 @@ public class HospitalManager {
      * @param p Objeto Paciente a ser admitido.
      */
     public void admitirPaciente(Paciente p) {
-        // Todo paciente é registrado ou atualizado na AVL (Banco de Dados Principal) [cite: 33, 80]
+        // Todo paciente é registrado ou atualizado na AVL (Banco de Dados Principal)
         prontuarios.insert(p);
 
         // Encaminhamento baseado na Triagem: Vermelho/Laranja vai para Emergência
         if (p.getUrgencia() == NivelUrgencia.VERMELHO || p.getUrgencia() == NivelUrgencia.LARANJA) {
-            filaEmergencia.insert(p); // Insere na Max-Heap [cite: 42, 97]
+            filaEmergencia.insert(p); // Insere na Max-Heap
         } else {
             filaComum.enqueue(p);    // Insere na Fila Comum (Azul/Verde)
         }
@@ -82,7 +81,7 @@ public class HospitalManager {
      * @param p Paciente a ser internado.
      */
     public void internarPaciente(Paciente p) {
-        // O CPF do paciente é a chave para o acesso instantâneo O(1) [cite: 113]
+        // O CPF do paciente é a chave para o acesso instantâneo O(1)
         uti.put(p.getCpf(), p);
     }
 
