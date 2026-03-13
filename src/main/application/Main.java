@@ -1,10 +1,9 @@
-package main;
+package main.application;
 
 import java.util.Scanner;
-import model.Paciente;
-import model.NivelUrgencia;
-import service.HospitalManager;
-import structures.*;
+import main.model.Paciente;
+import main.model.NivelUrgencia;
+import main.service.HospitalManager;
 
 /**
  * Ponto de entrada do sistema de gestão hospitalar.
