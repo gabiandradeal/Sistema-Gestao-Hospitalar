@@ -1,4 +1,4 @@
-package BST;
+package structures.bst;
 
 public interface BST<T extends Comparable <T>> {
 
