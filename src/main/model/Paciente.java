@@ -1,6 +1,7 @@
 package main.model;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Paciente implements Comparable<Paciente> {
     private String nome;
@@ -9,26 +10,36 @@ public class Paciente implements Comparable<Paciente> {
     private String[] sintomas;
 
     // ==========================================
+    // <--------- CONSTRUTORES --------->
+    // ==========================================
+
+    public Paciente(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+
+    public Paciente(String nome, String cpf, NivelUrgencia urgencia,  String[] sintomas) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.urgencia = urgencia;
+        this.sintomas = sintomas;
+    }
+
+    // ==========================================
     // <--------- GETTERS E SETTERS --------->
     // ==========================================
     public String getCpf() {
         return cpf;
     }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     public String getNome() {
         return nome;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
-    public ClassificacaoRisco getUrgencia() {
+    public NivelUrgencia getUrgencia() {
         return urgencia;
     }
-    public void setUrgencia(ClassificacaoRisco urgencia) {
+    public void setUrgencia(NivelUrgencia urgencia) {
         this.urgencia = urgencia;
     }
 
