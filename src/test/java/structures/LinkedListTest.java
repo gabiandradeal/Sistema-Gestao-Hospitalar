@@ -1,4 +1,4 @@
-package test.structures;
+package structures;
 
 public class LinkedListTest {
 }

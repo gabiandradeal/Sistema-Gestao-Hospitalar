@@ -1,7 +1,7 @@
-package main.service;
+package service;
 
-import main.model.Paciente;
-import main.model.NivelUrgencia;
+import model.Paciente;
+import model.NivelUrgencia;
 
 /**
  * Classe responsável pela integração das estruturas de dados e gerenciamento do fluxo hospitalar.
