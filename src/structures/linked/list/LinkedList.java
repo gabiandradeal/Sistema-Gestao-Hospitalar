@@ -32,12 +32,12 @@ public class LinkedList<T> implements List<T> {
         return head;
     }
 
-    @Override
     /**
      * Calcula e retorna a quantidade de elementos válidos presentes na lista.
      * @return o tamanho atual da lista
      * @since 1.0
      */
+    @Override
     public int size() {
         NodeLinked<T> node = getHead();
         return size(node);
@@ -110,13 +110,14 @@ public class LinkedList<T> implements List<T> {
      * @throws NoSuchElementException quando o elemento procurado não existe na lista
      * @since 1.0
      */
-
-    /*
-     * Obs: Optamos por usar .equals() pela praticidade de estar usando o Generics<T> em que cada Class Wrapper gera um objeto
-     */
     @Override
     public void remove(T element) {
         if (isEmpty()) throw new NullPointerException("Não é possível remover nenhuma elemento, a Lista está Vazia");
+
+
+        /*
+         * Obs: Optamos por usar .equals() pela praticidade de estar usando o Generics<T> em que cada Class Wrapper gera um objeto
+         */
 
         // Se o elemento a ser removido for a cabeça (head)
         if (head.getData().equals(element)) { //.equals(): Ele compara o valor/conteúdo do objeto
