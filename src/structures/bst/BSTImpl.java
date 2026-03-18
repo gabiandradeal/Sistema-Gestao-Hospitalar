@@ -3,11 +3,11 @@ package structures.bst;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BSTImpl<T extends Comparable <T>> implements BST<T>{
+public class BST<T extends Comparable <T>> implements Tree<T>{
 
     protected BSTNode<T> root;
 
-    public BSTImpl(){
+    public BST(){
         root = new BSTNode<T>();
     }
 

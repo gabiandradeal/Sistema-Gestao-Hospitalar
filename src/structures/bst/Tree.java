@@ -1,6 +1,6 @@
 package structures.bst;
 
-public interface BST<T extends Comparable <T>> {
+public interface Tree<T extends Comparable <T>> {
 
     public boolean isEmpty();
     public int height();
