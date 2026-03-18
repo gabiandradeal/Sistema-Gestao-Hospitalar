@@ -1,6 +1,7 @@
 package structures.hash;
 import java.util.ArrayList;
 import structures.linked.list.LinkedList;
+import structures.linked.list.NodeLinked;
 
 /**
  * HashTable é uma estrutura de dados semelhante ao array. Nesse sentido, 
@@ -84,27 +85,20 @@ public class HashTable<T> implements Table<T> {
     public T remove(T element)
     {
         LinkedList<T> bucket = table.get(hashFunction(element.hashCode()));
+        int bucketSize = bucket.size();
+        NodeLinked<T> currentNode = bucket.getHead();
+        T item = currentNode.getData();
 
-        for (T item : bucket)
+        for (int i = 0; i < bucketSize; i++)
         {
             if (item.equals(element)) {
                 bucket.remove(item);
                 return item;
             }
+            currentNode = currentNode.getNext();
+            item = currentNode.getData();
         }
         return null;
-    }
-
-    @Override
-    public int indexOf(T element)
-    {
-        LinkedList<T> bucket = table.get(hashFunction(element.hashCode()));
-
-        for (T item : bucket)
-        {
-            if (item.equals(element)) return hashFunction(element.hashCode());
-        }
-        return -1;
     }
 
     @Override
@@ -115,16 +109,28 @@ public class HashTable<T> implements Table<T> {
         return;
     }
 
+    //Utiliza o search da LinkedList.
     @Override
-    public T search(T element)
+    public boolean search(T element)
     {
         LinkedList<T> bucket = table.get(hashFunction(element.hashCode()));
+        return bucket.search(element);
+    }
 
-        for (T item : bucket)
+    
+    @Override
+    public int indexOf(T element)
+    {
+        LinkedList<T> bucket = table.get(hashFunction(element.hashCode()));
+        int bucketSize = bucket.size();
+        NodeLinked<T> currentNode = bucket.getHead();
+        T item = currentNode.getData();
+
+        for (int i = 0; i <bucketSize; i++)
         {
-            if (item.equals(element)) return item;
+            if (item.equals(element)) return hashFunction(element.hashCode());
         }
-        return null;
+        return -1;
     }
 
     @Override
@@ -135,9 +141,15 @@ public class HashTable<T> implements Table<T> {
 
         for (LinkedList<T> bucket : table)
         {
-            for (T element : bucket)
+            int bucketSize = bucket.size();
+            NodeLinked<T> currentNode = bucket.getHead();
+            T item = currentNode.getData();
+        
+            for (int i = 0; i < bucketSize; i++)
             {
-                newHashTable.insert(element);
+                newHashTable.insert(item);
+                currentNode = currentNode.getNext();
+                item = currentNode.getData();
             }
         }
 

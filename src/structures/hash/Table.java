@@ -1,4 +1,4 @@
-package src.structures.hash;
+package structures.hash;
 
 public interface Table<T> {
     public boolean isEmpty();
@@ -7,8 +7,7 @@ public interface Table<T> {
     public int size();
     public void insert(T element);
     public T remove(T element);
-    public T search(T element);
+    public boolean search(T element);
     public int indexOf(T element);
-    public void clear();
     public void rehash();
 }
