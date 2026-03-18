@@ -4,6 +4,15 @@
 *.iml
 bin/
 out/
+
 # Arquivos de Sistema
 .DS_Store
 Thumbs.db
+
+# Maven
+target/
+pom.xml.*
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
