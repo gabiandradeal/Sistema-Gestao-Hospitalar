@@ -1,5 +1,12 @@
 package structures.linked.list;
 
+/**
+ * Interface genérica para a estrutura de dados Lista.
+ * Define as operações fundamentais para a manipulação de elementos.
+ * @author Georis
+ * @version 1.0
+ * @since 11/03
+ */
 public interface List<T> {
         boolean search();
         void add(T element);
