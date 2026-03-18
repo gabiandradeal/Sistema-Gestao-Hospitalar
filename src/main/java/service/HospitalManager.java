@@ -9,7 +9,7 @@ import model.NivelUrgencia;
  */
 public class HospitalManager {
 
-    /** Prontuário Geral do hospital (Baseado em Árvore AVL para buscas estáveis). */
+//    /** Prontuário Geral do hospital (Baseado em Árvore AVL para buscas estáveis via CPF😷). */
     private ITree<Paciente> prontuarios;
 
     /** Fila de Emergência (Baseada em Max-Heap para priorizar estados graves). */
@@ -72,6 +72,8 @@ public class HospitalManager {
      * @param p Paciente (contendo o CPF) a ser buscado.
      * @return O registro completo do paciente localizado na AVL.
      */
+
+    // No caso, a procura não seria por CPF?
     public Paciente consultarHistorico(Paciente p) {
         return prontuarios.search(p);
     }

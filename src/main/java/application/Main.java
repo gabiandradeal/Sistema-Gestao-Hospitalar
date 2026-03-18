@@ -98,7 +98,13 @@ public class Main {
         System.out.print("Selecione a cor baseada na urgência (1-5): ");
         int nivel = Integer.parseInt(sc.nextLine());
 
+        // Adicionando verificação para impedir erro de Index
+        while (nivel < 1 || nivel > 5) {
+            System.out.println("⚠️ Nível inválido! Definindo como AZUL por padrão.");
+            nivel = Integer.parseInt(sc.nextLine());
+        }
         NivelUrgencia urgencia = NivelUrgencia.values()[nivel - 1];
+
         Paciente novo = new Paciente(nome, cpf, urgencia);
 
         manager.admitirPaciente(novo);
