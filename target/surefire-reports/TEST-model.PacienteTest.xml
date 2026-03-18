@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="model.PacienteTest" time="0.036" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="25"/>
+    <property name="maven.user.extensions" value="C:\Users\suell/.m2/extensions.xml"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar\target\test-classes;C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar\target\classes;C:\Users\suell\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\suell\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\suell\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\suell\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\suell\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\suell\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="maven.user.toolchains" value="C:\Users\suell/.m2/toolchains.xml"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="America/Fortaleza"/>
+    <property name="java.vm.specification.version" value="25"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="maven.repo.central" value="https://repo.maven.apache.org/maven2"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="BR"/>
+    <property name="session.topDirectory" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-25.0.1\bin"/>
+    <property name="sun.java.command" value="C:\Users\suell\AppData\Local\Temp\surefire1821920918784290813\surefirebooter-20260316211039966_3.jar C:\Users\suell\AppData\Local\Temp\surefire1821920918784290813 2026-03-16T21-10-36_525-jvmRun1 surefire-20260316211039966_1tmp surefire_0-20260316211039966_2tmp"/>
+    <property name="maven.project.settings" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar/.mvn/settings.xml"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar\target\test-classes;C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar\target\classes;C:\Users\suell\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\suell\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\suell\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\suell\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\suell\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\suell\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\suell"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-25.0.1"/>
+    <property name="maven.user.conf" value="C:\Users\suell/.m2"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="maven.project.conf" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar/.mvn"/>
+    <property name="surefire.real.class.path" value="C:\Users\suell\AppData\Local\Temp\surefire1821920918784290813\surefirebooter-20260316211039966_3.jar"/>
+    <property name="session.rootDirectory" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="25.0.1+8-LTS-27"/>
+    <property name="user.name" value="suell"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="maven.installation.conf" value="C:\Users\suell\.m2\wrapper\dists\apache-maven-4.0.0-rc-4\fd16944c150c67a44b73ac15408f32ab4b2fd371521700464ff72b9ad34c2c92/conf"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="maven.installation.toolchains" value="C:\Users\suell\.m2\wrapper\dists\apache-maven-4.0.0-rc-4\fd16944c150c67a44b73ac15408f32ab4b2fd371521700464ff72b9ad34c2c92/conf/toolchains.xml"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\suell\.m2\repository"/>
+    <property name="maven.project.extensions" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar/.mvn/extensions.xml"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\suell\AppData\Local\Temp\"/>
+    <property name="maven.installation.extensions" value="C:\Users\suell\.m2\wrapper\dists\apache-maven-4.0.0-rc-4\fd16944c150c67a44b73ac15408f32ab4b2fd371521700464ff72b9ad34c2c92/conf/extensions.xml"/>
+    <property name="java.version" value="25.0.1"/>
+    <property name="user.dir" value="C:\Users\suell\Documents\UEPB\Projetos\Linguagem_Java\LEDA2\Sistema-Gestao-Hospitalar"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-25.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Windows\system32;C:\Program Files\Java\jdk-25.0.1\bin;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\suell\.local\bin;C:\Users\suell\AppData\Local\Microsoft\WindowsApps;C:\Users\suell\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\suell\AppData\Roaming\npm;C:\Users\suell\AppData\Local\Pandoc\;C:\Users\suell\.dotnet\tools;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.0.1+8-LTS-27"/>
+    <property name="stdin.encoding" value="Cp1252"/>
+    <property name="maven.installation.settings" value="C:\Users\suell\.m2\wrapper\dists\apache-maven-4.0.0-rc-4\fd16944c150c67a44b73ac15408f32ab4b2fd371521700464ff72b9ad34c2c92/conf/settings.xml"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="maven.user.settings" value="C:\Users\suell/.m2/settings.xml"/>
+    <property name="java.class.version" value="69.0"/>
+  </properties>
+  <testcase name="testConfiguracao" classname="model.PacienteTest" time="0.017">
+    <system-out><![CDATA[O JUnit está funcionando!
+]]></system-out>
+  </testcase>
+</testsuite>

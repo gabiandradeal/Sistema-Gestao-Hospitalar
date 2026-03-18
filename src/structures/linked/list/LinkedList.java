@@ -8,6 +8,7 @@ public class LinkedList<T> implements List<T> {
     public LinkedList() {
         this.head = new NodeLinked<>();
     }
+
     public LinkedList(T firstElement) {
         this.head = new NodeLinked<>(firstElement);
     }
@@ -18,19 +19,37 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public int size() {
-        NodeLinked<T> node  = getHead();
+        NodeLinked<T> node = getHead();
         return size(node);
     }
+
     // Método auxiliar que garante a lógica de recursividade
-    private int size(NodeLinked<T> node){
+    private int size(NodeLinked<T> node) {
         /*
-        *  Obs: preciso da dupla verificação aqui por questão de segurança
-        *       Isso ocorre porque ao ser chamado size([NIL]) o '0' será retornado, mas antes de retornar, chama size([NIL].getNext())
-        *       se por algum motivo null escapar (bug, lista mal construída), a verificação node == null serve para caso null.isNIL() → EXPLODE 💥
-        */
-        if(node == null || node.isNIL()){return 0;}
+         *  Obs: preciso da dupla verificação aqui por questão de segurança
+         *       Isso ocorre porque ao ser chamado size([NIL]) o '0' será retornado, mas antes de retornar, chama size([NIL].getNext())
+         *       se por algum motivo null escapar (bug, lista mal construída), a verificação node == null serve para caso null.isNIL() → EXPLODE 💥
+         */
+        if (node == null || node.isNIL()) {
+            return 0;
+        }
         return 1 + size(node.getNext());
     }
+
+    // Método necessário para implementação na HashTable
+    @Override
+    public boolean search(T element) {
+        NodeLinked<T> current = head;
+
+        while(!current.isNIL()) {
+            if (current.getData().equals(element)) {
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+
 
     @Override
     public void add(T element) {

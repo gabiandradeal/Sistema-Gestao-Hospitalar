@@ -1,6 +1,7 @@
 package structures.linked.list;
 
 public interface List<T> {
+        boolean search();
         void add(T element);
         void remove(T element);
         int size();
