@@ -18,7 +18,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        /** * Inicialização do gerenciador do sistema.
+        /**
+         * Inicialização do gerenciador do sistema.
          * Nota: As instâncias das estruturas devem ser passadas conforme as implementações finalizadas.
          */
         HospitalManager manager = new HospitalManager(

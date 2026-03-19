@@ -9,7 +9,10 @@ import model.NivelUrgencia;
  */
 public class HospitalManager {
 
-//    /** Prontuário Geral do hospital (Baseado em Árvore AVL para buscas estáveis via CPF😷). */
+    /** Flag para garantir alternância entre atendimento da fila comum e da prioridade */
+    boolean proximoPrioridade = true;
+
+    /** Prontuário Geral do hospital (Baseado em Árvore AVL para buscas estáveis via CPF😷). */
     private ITree<Paciente> prontuarios;
 
     /** Fila de Emergência (Baseada em Max-Heap para priorizar estados graves). */
@@ -54,17 +57,34 @@ public class HospitalManager {
     }
 
     /**
-     * Gerencia a chamada do próximo paciente pelo médico, respeitando a prioridade absoluta
-     * da fila de emergência sobre a comum.
-     * @return O próximo paciente a ser atendido.
+     * Gerencia a chamada do próximo paciente, alternando entre emergência e comum
+     * para não travar o fluxo, mas garantindo o atendimento se uma das filas esvaziar.
+     * @return O próximo paciente a ser atendido
+     * @since 1.0
      */
     public Paciente chamarProximo() {
-        // Prioridade absoluta para quem está na Emergência (Max-Heap)
-        if (!filaEmergencia.isEmpty()) {
+        // Tenta atender emergência (se for a vez dela E não estiver vazia)
+        if (proximoPrioridade && !filaEmergencia.isEmpty()) {
+            System.out.println("Chamando próximo paciente da fila de prioridade");
+            proximoPrioridade = false; // Próximo será comum
             return filaEmergencia.extractMax();
         }
-        // Se a emergência estiver vazia, retira da fila comum
-        return filaComum.dequeue();
+
+        // Se chegou aqui, ou era a vez do comum, ou a emergência estava vazia
+        if (!filaComum.isEmpty()) {
+            System.out.println("Chamando próximo paciente da fila geral");
+            proximoPrioridade = true; // Próximo será emergência
+            return filaComum.dequeue();
+        }
+
+        // Correção do Bug: A fila comum estava vazia, mas ainda tem gente na emergência!
+        if (!filaEmergencia.isEmpty()) {
+            System.out.println("Chamando próximo paciente da fila de prioridade");
+            proximoPrioridade = true;
+            return filaEmergencia.extractMax();
+        }
+
+        return null; // Hospital totalmente vazio
     }
 
     /**
