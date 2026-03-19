@@ -21,13 +21,15 @@ public class Paciente implements Comparable<Paciente> {
     // ==========================================
 
     /**
-     * Constrói um novo objeto Paciente contendo as informações básicas de identificação.
+     * Constrói um novo objeto Paciente contendo as informações básicas de identificação e atendimento.
      * @param nome o nome completo do paciente
      * @param cpf o número de identificação único (CPF) do paciente
+     * @param urgencia o nível de urgência associado ao quadro clínico
      */
-    public Paciente(String nome, String cpf) {
+    public Paciente(String nome, String cpf, NivelUrgencia urgencia) {
         this.nome = nome;
         this.cpf = cpf;
+        this.urgencia = urgencia;
     }
 
     /**

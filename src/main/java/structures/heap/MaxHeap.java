@@ -1,6 +1,6 @@
 package structures.heap;
 
-public class MaxHeap implements Heap<T> {
+public class MaxHeap<T> implements Heap<T> {
     private T[] array;
     private int size;
 

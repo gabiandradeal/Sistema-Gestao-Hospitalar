@@ -2,7 +2,7 @@ package structures.avl;
 
 import structures.bst.*;
 
-public class AVLTreeImpl <T extends Comparable<T>> extends BSTImpl<T> implements AVLTree<T> {
+public class AVLTree<T extends Comparable<T>> extends BST<T> implements AVL<T> {
 
     private int calculateBalanceFactor(BSTNode<T> node){
 

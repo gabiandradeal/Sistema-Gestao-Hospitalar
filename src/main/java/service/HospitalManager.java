@@ -2,6 +2,12 @@ package service;
 
 import model.Paciente;
 import model.NivelUrgencia;
+import structures.avl.*;
+import structures.hash.*;
+import structures.heap.*;
+import structures.queue.*;
+// Não posso usar 'import structures.*;' por não pegar subpacotes
+
 
 /**
  * Classe responsável pela integração das estruturas de dados e gerenciamento do fluxo hospitalar.
@@ -13,16 +19,16 @@ public class HospitalManager {
     boolean proximoPrioridade = true;
 
     /** Prontuário Geral do hospital (Baseado em Árvore AVL para buscas estáveis via CPF😷). */
-    private ITree<Paciente> prontuarios;
+    private AVLTree<Paciente> prontuarios;
 
     /** Fila de Emergência (Baseada em Max-Heap para priorizar estados graves). */
-    private IHeap<Paciente> filaEmergencia;
+    private MaxHeap<Paciente> filaEmergencia;
 
     /** Fila de Triagem Normal (Baseada em 2 Pilhas para casos leves). */
-    private IQueue<Paciente> filaComum;
+    private Quack<Paciente> filaComum;
 
     /** Unidade de Internação Crítica (Baseada em Tabela Hash para acesso imediato via CPF). */
-    private IHashTable<String, Paciente> uti;
+    private HashTable<String, Paciente> uti;
 
     /**
      * Construtor da central de gerenciamento hospitalar.
@@ -31,8 +37,8 @@ public class HospitalManager {
      * @param filaComum Instância da Fila de 2 Pilhas para triagem comum.
      * @param uti Instância da Tabela Hash para pacientes internados.
      */
-    public HospitalManager(ITree<Paciente> prontuarios, IHeap<Paciente> filaEmergencia,
-                           IQueue<Paciente> filaComum, IHashTable<String, Paciente> uti) {
+    public HospitalManager(AVLTree<Paciente> prontuarios, Heap<Paciente> filaEmergencia,
+                           Quack<Paciente> filaComum, HashTable<String, Paciente> uti) {
         this.prontuarios = prontuarios;
         this.filaEmergencia = filaEmergencia;
         this.filaComum = filaComum;
