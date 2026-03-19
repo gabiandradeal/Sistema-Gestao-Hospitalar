@@ -11,8 +11,8 @@ import structures.linked.list.NodeLinked;
  * @since 17/03/2026
  */
 public class HashTable<T> implements Table<T> {
-    ArrayList<LinkedList<T>> table;
-    int capacity;
+    private ArrayList<LinkedList<T>> table;
+    private int capacity;
 
     public HashTable(int capacity) {
         this.capacity = capacity;
