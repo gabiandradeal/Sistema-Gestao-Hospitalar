@@ -1,6 +1,6 @@
 package structures.stack;
 
-import linked.list.LinkedList;
+import structures.linked.list.LinkedList;
 
 /**
  * Implementação de uma Pilha (Stack) utilizando uma Lista Encadeada (LinkedList) como estrutura base.

@@ -1,6 +1,6 @@
 package structures.queue;
 
-import stack.LinkedStack;
+import structures.stack.LinkedStack;
 
 /**
  * Implementação de uma Fila (Queue) utilizando duas Pilhas (Stacks).

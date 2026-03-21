@@ -8,7 +8,7 @@ package structures.linked.list;
  * @since 11/03
  */
 public interface List<T> {
-        boolean search();
+        boolean search(T element);
         void add(T element);
         void remove(T element);
         int size();
