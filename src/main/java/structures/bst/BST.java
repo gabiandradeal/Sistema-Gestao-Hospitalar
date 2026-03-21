@@ -81,6 +81,8 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
     protected void remove(BSTNode<T> node){
         if(node.getLeft().isEmpty() && node.getRight().isEmpty()){
             node.setData(null);
+            node.setLeft(null);
+            node.setRight(null);
         }
 
         else if(node.getLeft().isEmpty() || node.getRight().isEmpty()){
@@ -95,8 +97,8 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
             }
 
             node.setData(child.getData());
-            node.setLeft(child.getLeft());
             node.setRight(child.getRight());
+            node.setLeft(child.getLeft());
          }
 
          else{
