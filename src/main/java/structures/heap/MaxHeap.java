@@ -1,17 +1,18 @@
 package structures.heap;
+import java.util.ArrayList;
 
-public class MaxHeap<T> implements Heap<T> {
-    private T[] array;
+public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
+    private ArrayList<T> array;
     private int size;
 
     public MaxHeap(int capacity) {
-        this.array = (T[]) new Comparable[capacity];
+        this.array = new ArrayList<>(capacity);
         this.size = 0;
     }
 
     @Override
     public T getRoot() {
-        return array[0];
+        return array.get(0);
     }
 
     @Override
@@ -34,18 +35,17 @@ public class MaxHeap<T> implements Heap<T> {
         return 2 * idx + 1; // Aqui tem esse +1 pelo mesmo motivo de right ter um +2.
     }
 
+    public int parent(int idx) {
+        return (idx - 1) / 2;
+    }
+
     @Override
     public void insert(T element) {
-
-        if (size == array.length) {
-            this.array = java.util.Arrays.copyOf(array, size * 2);
-        }
-
-        array[size] = element;
+        array.add(element);
         int currentIdx = size;
         size++;
 
-        while (currentIdx > 0 && array[currentIdx].compareTo(array[parent(currentIdx)]) > 0) {
+        while (currentIdx > 0 && array.get(currentIdx).compareTo(array.get(parent(currentIdx))) > 0) {
             swap(currentIdx, parent(currentIdx));
             currentIdx = parent(currentIdx);
         }
@@ -55,10 +55,10 @@ public class MaxHeap<T> implements Heap<T> {
     public T remove() {
         if (size == 0) return null;
 
-        T removedMax = array[0];
+        T removedMax = array.get(0);
 
-        array[0] = array[size - 1];
-        array[size - 1] = null;
+        array.set(0, array.get(size - 1));
+        array.remove(size - 1);
         size--;
 
         heapify(0);
@@ -71,11 +71,11 @@ public class MaxHeap<T> implements Heap<T> {
         int leftNode = left(idx);
         int rightNode = right(idx);
 
-        if (leftNode < size && array[leftNode].compareTo(array[largest]) > 0) {
+        if (leftNode < size && array.get(leftNode).compareTo(array.get(largest)) > 0) {
             largest = leftNode;
         }
 
-        if (rightNode < size && array[rightNode].compareTo(array[largest]) > 0) {
+        if (rightNode < size && array.get(rightNode).compareTo(array.get(largest)) > 0) {
             largest = rightNode;
         }
 
@@ -85,17 +85,9 @@ public class MaxHeap<T> implements Heap<T> {
         }
     }
 
-    @Override
-    public Heap<T> buildHeap(T[] arr)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Heap<T> heapsort(Function<> map)
-    {
-        // TODO Auto-generated method stub
-        return null;
+    private void swap(int i, int j) {
+        T temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
     }
 }

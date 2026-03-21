@@ -6,9 +6,7 @@ public interface Heap<T> {
     public int right(int idx);
     public int left(int idx);
     public int size();
-    public void insert();
+    public void insert(T element);
     public T remove();
-    public void heapify();
-    public Heap<T> buildHeap(T[] array);
-    public Heap<T> heapsort(Function<> map);
+    public void heapify(int idx);
 }
