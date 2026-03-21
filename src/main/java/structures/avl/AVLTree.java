@@ -64,14 +64,14 @@ public class AVLTree<T extends Comparable<T>> extends BST<T> implements AVL<T> {
         int balance = calculateBalanceFactor(node);
 
         if(balance > 1){
-            if(calculateBalanceFactor(node.getRight()) < 0){
+            if(calculateBalanceFactor(node.getLeft()) < 0){
                 leftRotation(node.getLeft());
             }
             
             rightRotation(node);
         }
         else if(balance < -1){
-            if(calculateBalanceFactor(node.getLeft()) > 0){
+            if(calculateBalanceFactor(node.getRight()) > 0){
                 rightRotation(node.getRight());
             }
 
