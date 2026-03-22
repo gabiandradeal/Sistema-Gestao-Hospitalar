@@ -41,7 +41,7 @@ public class BSTTest {
         assertEquals(1, bst.height(), "Altura deve ser 1 após inserir nos dois lados da raiz.");
 
         bst.insert(pGabi);
-        assertEquals(2, bst.height(), "A altura aumentou para 2 com a Gabi.");
+        assertEquals(2, bst.height(), "A altura aumentou para 2 com Gabi.");
     }
 
     @Test
@@ -77,6 +77,7 @@ public class BSTTest {
         bst.insert(pJoao);
         bst.insert(pGabi);
 
+        //ps: como a árvore é genérica, nao podemos guardar o resultado num array do tipo Paciente[], o java nao deixa
         Comparable[] relatorio = bst.Order();
 
         assertEquals(pGabi, relatorio[0]);
