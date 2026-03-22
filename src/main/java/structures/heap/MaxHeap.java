@@ -12,11 +12,13 @@ public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
 
     @Override
     public T getRoot() {
+        if (size == 0) return null;
         return array.get(0);
     }
 
     @Override
     public int height() {
+        if (size == 0) return -1; // A altura de uma árvore vazia é definida como -1.
         return (int) Math.floor(Math.log(size()) / Math.log(2));
     }
 
