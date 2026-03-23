@@ -8,11 +8,22 @@ import structures.hash.HashTable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe responsável por realizar testes na estrutura HashTable
+ * @author Suelle
+ * @version 1.0
+ * @since 20/03/2026
+ */
 public class HashTableTest {
 
     private HashTable<Paciente> uti;
     private Paciente p1, p2, p3;
 
+    /**
+     * Configura o ambiente de testes antes de cada execução
+     * @see HashTable
+     * @since 1.0
+     */
     @BeforeEach
     public void setUp() {
         uti = new HashTable<>();
@@ -22,6 +33,12 @@ public class HashTableTest {
         p3 = new Paciente("Horlan", "333.333.333-33", NivelUrgencia.VERMELHO);
     }
 
+    /**
+     * Testa os métodos de inserção e busca na tabela hash
+     * @see HashTable#insert(Object)
+     * @see HashTable#search(Object)
+     * @since 1.0
+     */
     @Test
     void testInsertESearch() {
         assertTrue(uti.isEmpty(), "A uti deve começar vazia.");
@@ -37,6 +54,11 @@ public class HashTableTest {
         assertFalse(uti.search(p3), "Paciente 3 não foi inserido.");
     }
 
+    /**
+     * Testa o método de remoção da Hash Table para garantir que remove e retorna o elemento correto.
+     * @see HashTable#remove(Object)
+     * @since 1.0
+     */
     @Test
     void testRemove() {
         uti.insert(p1);
@@ -51,9 +73,15 @@ public class HashTableTest {
         assertNull(uti.remove(p3), "Remover um elemento inexistente retorna null.");
     }
 
+    /**
+     * Testa o comportamento da HashTable diante de colisões de índices, inserindo de forma intencional
+     * mais elementos do que a capacidade original (Princípio da Casa de Pombos).
+     * @see HashTable#insert(Object)
+     * @see HashTable#search(Object)
+     * @since 1.0
+     */
     @Test
     void testColisaoEEncadeamento() {
-        //princípio da casa de pombos
         for (int i = 0; i < 15; i++) {
             uti.insert(new Paciente("Doente " + i, "000.000.000-" + String.format("%02d", i), NivelUrgencia.VERMELHO));
         }
@@ -65,6 +93,13 @@ public class HashTableTest {
         assertTrue(uti.search(testeBusca), "A busca tem que encontrar o doente mesmo que ele esteja perdido no meio de uma colisão");
     }
 
+    /**
+     * Testa o rehash da tabela, verificando se a capacidade foi expandida corretamente para o próximo número primo
+     * e se os dados continuaram armazenados corretamente
+     * @see HashTable#rehash()
+     * @see HashTable#capacity()
+     * @since 1.0
+     */
     @Test
     void testRehash() {
         uti.insert(p1);

@@ -5,15 +5,27 @@ import model.Paciente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.bst.BST;
+import structures.bst.BSTNode;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe responsável por realizar testes na estrutura BST
+ * @author Suelle
+ * @version 1.0
+ * @since 21/03/2026
+ */
 public class BSTTest {
 
     private BST<Paciente> bst;
 
     private Paciente pHorlan, pGeoris, pGabi, pSuelle, pJoao;
 
+    /**
+     * Configura o ambiente de testes antes de cada execução
+     * @see BST
+     * @since 1.0
+     */
     @BeforeEach
     public void setUp() {
         bst = new BST<>();
@@ -25,6 +37,13 @@ public class BSTTest {
         pJoao = new Paciente("João", "444.444.444-44", NivelUrgencia.LARANJA);
     }
 
+    /**
+     * Testa o método de inserção na árvore binária e se o tamanho (size) e a altura (height) foram
+     * atualizados corretamente.
+     * @see BST#insert(Comparable)
+     * @see BST#size()
+     * @see BST#height()
+     */
     @Test
     void testInsertESizeEHeight() {
         assertTrue(bst.isEmpty(), "A árvore deve começar vazia.");
@@ -44,6 +63,12 @@ public class BSTTest {
         assertEquals(2, bst.height(), "A altura aumentou para 2 com Gabi.");
     }
 
+    /**
+     * Testa o método de busca na BST, confirmando se retorna o nó específico para elementos existentes
+     * e NIL para elementos inexistentes.
+     * @see BST#search(Comparable)
+     * @since 1.0
+     */
     @Test
     void testSearch() {
         bst.insert(pHorlan);
@@ -57,6 +82,12 @@ public class BSTTest {
         assertTrue(bst.search(pInexistente).isEmpty(), "Samuel não está na árvore, entao deve retornar um nó vazio (NIL)");
     }
 
+    /**
+     * Testa o retorno de nós com o maior e menor valor na árvore (nesse caso, pela ordem alfabética.)
+     * @see BST#minimum()
+     * @see BST#maximum()
+     * @since 1.0
+     */
     @Test
     void testMinimumEMaximum() {
         bst.insert(pHorlan);
@@ -69,6 +100,12 @@ public class BSTTest {
         assertEquals(pSuelle, bst.maximum().getData(), "Suelle é a última em ordem alfabética (🙄).");
     }
 
+    /**
+     * Testa a ordenação InOrder (em ordem) da árvore que deve garantir a ordenação
+     * alfabética dos pacientes para geração do relatório.
+     * @see BST#Order()
+     * @since 1.0
+     */
     @Test
     void testOrdenacaoDoRelatorio() {
         bst.insert(pHorlan);
@@ -87,6 +124,11 @@ public class BSTTest {
         assertEquals(pSuelle, relatorio[4]);
     }
 
+    /**
+     * Testa a remoção de um nó em diferentes cenários (folha, grau 1 e grau 2)
+     * @see BST#remove(Comparable)
+     * @since 1.0
+     */
     @Test
     void testRemove() {
         bst.insert(pHorlan);

@@ -10,6 +10,12 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe responsável por realizar testes na estrutura LinkedList
+ * @author Suelle
+ * @version 1.0
+ * @since 20/03/2026
+ */
 public class LinkedListTest {
 
     private LinkedList<Paciente> lista;
@@ -19,6 +25,12 @@ public class LinkedListTest {
     private Paciente p3;
 
 
+    /**
+     * Configura o ambiente de testes antes de cada execução
+     * instanciando novas listas para garantir que listas anteriores não interfiram.
+     * @see LinkedList
+     * @since 1.0
+     */
     @BeforeEach
     void setup(){
         lista = new LinkedList<>();
@@ -28,6 +40,12 @@ public class LinkedListTest {
         p3 = new Paciente("Gabi Andrade", "333.333.333-33", NivelUrgencia.AMARELO);
     }
 
+    /**
+     * Testa o método de adição normal da lista, verificando se os elementos foram inseridos corretamente
+     * e se o tamanho foi atualizado
+     * @see LinkedList#add(Object)
+     * @since 1.0
+     */
     @Test
     void testAdd(){
         assertTrue(lista.isEmpty(), "Uma lista recém-criada deve ser vazia.");
@@ -41,6 +59,12 @@ public class LinkedListTest {
         assertEquals(2, lista.size(), "O tamanho da lista deve ser igual a 2");
     }
 
+    /**
+     * Testa a inserção e remoção de elementos no começo da lista.
+     * @see LinkedList#addFirst(Object)
+     * @see LinkedList#removeFirst()
+     * @since 1.0
+     */
     @Test
     void testAddFirstRemoveFirst(){
         lista.addFirst(p1);
@@ -61,6 +85,12 @@ public class LinkedListTest {
         assertTrue(lista.isEmpty());
     }
 
+    /**
+     * Testa a tentativa de remoção de um elemento inexistente na lista
+     * @throws NoSuchElementException quando o elemento não foi encontrado
+     * @see LinkedList#remove(Object)
+     * @since 1.0
+     */
     @Test
     void testRemoveElementoInexistente(){
         lista.add(p1);
@@ -76,6 +106,11 @@ public class LinkedListTest {
         assertEquals(2, lista.size(), "O tamanho da lista não deve mudar após uma tentativa de remoção falha.");
     }
 
+    /**
+     * Testa o método de busca na lista (testando se retorna true ou false)
+     * @see LinkedList#search(Object)
+     * @since 1.0
+     */
     @Test
     void testSearch() {
         lista.add(p1);
@@ -87,6 +122,11 @@ public class LinkedListTest {
         assertFalse(lista.search(p3), "Deve retornar false para um paciente que não foi adicionado.");
     }
 
+    /**
+     * Testa a remoção de um elemento existente.
+     * @see LinkedList#remove(Object)
+     * @since 1.0
+     */
     @Test
     void testRemoveElementoExistente() {
         lista.add(p1);
@@ -105,6 +145,12 @@ public class LinkedListTest {
         assertTrue(lista.search(p3));
     }
 
+    /**
+     * Testa a tentativa de remover um elemento específico quando a lista está vazia.
+     * @throws NullPointerException quando não há elemento pra remover na lista
+     * @see LinkedList#remove(Object)
+     * @since 1.0
+     */
     @Test
     void testRemoveEmListaVazia() {
         Exception exception = assertThrows(NullPointerException.class, () -> {
@@ -114,6 +160,12 @@ public class LinkedListTest {
         assertEquals("Não é possível remover nenhuma elemento, a Lista está Vazia", exception.getMessage());
     }
 
+    /**
+     * Testa a tentativa de remover o primeiro elemento (head) quando a lista está vazia.
+     * @throws NullPointerException quando não há o primeiro elemento pra remover na lista.
+     * @see LinkedList#removeFirst()
+     * @since 1.0
+     */
     @Test
     void testRemoveFirstEmListaVazia() {
         Exception exception = assertThrows(NullPointerException.class, () -> {
