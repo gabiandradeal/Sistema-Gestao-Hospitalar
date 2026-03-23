@@ -1,13 +1,16 @@
 package structures.heap;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
+public class MaxHeap<T> implements Heap<T> {
     private ArrayList<T> array;
     private int size;
+    private Comparator<T> comparator; // Necessário (por ser uma classe genérica) para ditar quais regras estaremos usando ao comparar os pacientes (emergência)
 
-    public MaxHeap(int capacity) {
+    public MaxHeap(int capacity, Comparator<T> comparator) {
         this.array = new ArrayList<>(capacity);
         this.size = 0;
+        this.comparator = comparator;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
         int currentIdx = size;
         size++;
 
-        while (currentIdx > 0 && array.get(currentIdx).compareTo(array.get(parent(currentIdx))) > 0) {
+        while (currentIdx > 0 && comparator.compare(array.get(currentIdx), array.get(parent(currentIdx))) > 0)) {
             swap(currentIdx, parent(currentIdx));
             currentIdx = parent(currentIdx);
         }
@@ -73,11 +76,11 @@ public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
         int leftNode = left(idx);
         int rightNode = right(idx);
 
-        if (leftNode < size && array.get(leftNode).compareTo(array.get(largest)) > 0) {
+        if (leftNode < size && comparator.compare(array.get(leftNode), array.get(largest)) > 0) {
             largest = leftNode;
         }
 
-        if (rightNode < size && array.get(rightNode).compareTo(array.get(largest)) > 0) {
+        if (rightNode < size && comparator.compare(array.get(rightNode), array.get(largest)) > 0) {
             largest = rightNode;
         }
 

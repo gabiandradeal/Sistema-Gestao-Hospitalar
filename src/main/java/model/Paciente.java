@@ -99,6 +99,22 @@ public class Paciente implements Comparable<Paciente> {
         return comparacaoNome;
 
     }
+
+
+    /**
+     * 🚨 PARA A MAX-HEAP (FILA DE EMERGÊNCIA)
+     * Compara o nível de urgência deste paciente com outro.
+     * Como o Enum NivelUrgencia está ordenado do menos grave (AZUL = 0)
+     * para o mais grave (VERMELHO = 4), a comparação nativa do Enum já resolve.
+     * @param outroPaciente o paciente a ser comparado
+     * @return positivo se este for mais grave, negativo se menos grave, 0 se igual
+     * @author Georis
+     * @version 1.0
+     */
+    public int compararPorUrgencia(Paciente outroPaciente) {
+        return this.urgencia.compareTo(outroPaciente.getUrgencia());
+    }
+
     /**
      * 🔗 PARA A TABELA HASH (CHAINING)
      * Verifica a igualdade entre pacientes exclusivamente pelo CPF.
