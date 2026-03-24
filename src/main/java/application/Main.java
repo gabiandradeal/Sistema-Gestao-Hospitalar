@@ -9,6 +9,9 @@ import service.HospitalManager;
  * Ponto de entrada do sistema de gestão hospitalar.
  * Responsável por gerenciar a interface de linha de comando, capturar entradas do usuário
  * e coordenar o fluxo de atendimento através do HospitalManager.
+ * @author Gabriela
+ * @version 1.0
+ * @since 12/03
  */
 public class Main {
     /**

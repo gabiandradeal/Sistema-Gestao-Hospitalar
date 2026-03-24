@@ -12,6 +12,9 @@ import structures.queue.*;
 /**
  * Classe responsável pela integração das estruturas de dados e gerenciamento do fluxo hospitalar.
  * Atua como o "Cérebro" do sistema, coordenando a triagem, atendimento e internação.
+ * @author Gabriela
+ * @version 1.0
+ * @since 12/03
  */
 public class HospitalManager {
 
