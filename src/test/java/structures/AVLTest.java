@@ -5,7 +5,6 @@ import model.Paciente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.avl.AVLTree;
-import structures.bst.BSTNode;
 
 import static org.junit.jupiter.api.Assertions.*;
 
