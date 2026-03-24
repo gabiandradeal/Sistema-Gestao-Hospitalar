@@ -42,7 +42,7 @@ public class Quack<T> implements Queue<T>{
      */
     // O custo é O(1) Amortizado
     @Override
-    public void dequeue() {
+    public T dequeue() {
         if (stackOut.isEmpty()) {
             while(!stackIn.isEmpty()) {
                 stackOut.push(stackIn.pop());
@@ -50,7 +50,7 @@ public class Quack<T> implements Queue<T>{
         }
         if(stackOut.isEmpty()) throw new RuntimeException("Fila está vazia");
 
-        stackOut.pop();
+        return stackOut.pop();
     }
 
     /**

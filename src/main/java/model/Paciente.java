@@ -152,9 +152,8 @@ public class Paciente implements Comparable<Paciente> {
     @Override
     public String toString() {
         // Arrays.toString() converte o array de forma limpa para impressão: [Febre, Tosse, Dor de Cabeça]
-        return "Paciente [" +
+        return "Paciente " + nome + " [" +
                 "CPF='" + cpf + '\'' +
-                ", Nome='" + nome + '\'' +
                 ", Urgência=" + urgencia +
                 ", Sintomas=" + Arrays.toString(sintomas) +
                 ']';

@@ -50,7 +50,7 @@ public class MaxHeap<T> implements Heap<T> {
         int currentIdx = size;
         size++;
 
-        while (currentIdx > 0 && comparator.compare(array.get(currentIdx), array.get(parent(currentIdx))) > 0)) {
+        while (currentIdx > 0 && comparator.compare(array.get(currentIdx), array.get(parent(currentIdx))) > 0) {
             swap(currentIdx, parent(currentIdx));
             currentIdx = parent(currentIdx);
         }

@@ -4,6 +4,10 @@ import java.util.Scanner;
 import model.Paciente;
 import model.NivelUrgencia;
 import service.HospitalManager;
+import structures.avl.AVLTree;
+import structures.hash.HashTable;
+import structures.heap.MaxHeap;
+import structures.queue.Quack;
 
 /**
  * Ponto de entrada do sistema de gestão hospitalar.
@@ -18,16 +22,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+
+        AVLTree<Paciente> prontuarios = new AVLTree<>();
+
+        // Lembra que a MaxHeap precisa da capacidade máxima e da regra de urgência que fizemos?
+        MaxHeap<Paciente> filaEmergencia = new MaxHeap<>(100, (p1, p2) -> p1.compararPorUrgencia(p2));
+
+        Quack<Paciente> filaComum = new Quack<>();
+
+        HashTable<Paciente> uti = new HashTable<>();
+
         /**
          * Inicialização do gerenciador do sistema.
          * Nota: As instâncias das estruturas devem ser passadas conforme as implementações finalizadas.
          */
-        HospitalManager manager = new HospitalManager(
-                /* Instância AVL */ null,
-                /* Instância Max-Heap */ null,
-                /* Instância Fila 2 Pilhas */ null,
-                /* Instância Tabela Hash */ null
-        );
+        HospitalManager manager = new HospitalManager(prontuarios, filaEmergencia, filaComum, uti);
 
         int opcao = -1;
 
@@ -109,7 +118,7 @@ public class Main {
         Paciente novo = new Paciente(nome, cpf, urgencia);
 
         manager.admitirPaciente(novo);
-        System.out.println("✅ Paciente admitido e encaminhado conforme nível: " + urgencia);
+        System.out.println("\n✅ Paciente admitido e encaminhado conforme nível: " + urgencia);
     }
 
     /**
@@ -140,12 +149,22 @@ public class Main {
      * @param manager Gerenciador do sistema.
      */
     private static void consultarProntuario(Scanner sc, HospitalManager manager) {
-        System.out.print("Digite o CPF para consulta na AVL: ");
+        System.out.print("Digite o Nome do paciente: ");
+        String nome = sc.nextLine();
+        System.out.print("Digite o CPF (somente números) para consulta na AVL: ");
         String cpf = sc.nextLine();
-        // Lógica de busca e exibição implementada via HospitalManager
-        System.out.println("🔍 Consultando registros históricos para o CPF: " + cpf);
-    }
 
+        System.out.println("🔍 Consultando registros históricos para: " + nome);
+
+        Paciente resultado = manager.consultarHistorico(nome, cpf);
+
+        if (resultado == null) {
+            System.out.println("⚠️ Nenhum registro encontrado! Este paciente não possui histórico no hospital.");
+        } else {
+            System.out.println("✅ Histórico Encontrado: ");
+            System.out.println(resultado.toString());
+        }
+    }
     /**
      * Gerencia a busca e monitoramento de pacientes internados na UTI.
      * @param sc Scanner para leitura de dados.

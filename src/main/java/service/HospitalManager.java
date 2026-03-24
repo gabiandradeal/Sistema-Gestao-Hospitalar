@@ -3,8 +3,10 @@ package service;
 import model.Paciente;
 import model.NivelUrgencia;
 import structures.avl.*;
+import structures.bst.BSTNode;
 import structures.hash.*;
 import structures.heap.*;
+import structures.linked.list.NodeLinked;
 import structures.queue.*;
 // Não posso usar 'import structures.*;' por não pegar subpacotes
 
@@ -28,7 +30,7 @@ public class HospitalManager {
     private Quack<Paciente> filaComum;
 
     /** Unidade de Internação Crítica (Baseada em Tabela Hash para acesso imediato via CPF). */
-    private HashTable<String, Paciente> uti;
+    private HashTable<Paciente> uti;
 
     /**
      * Construtor da central de gerenciamento hospitalar.
@@ -37,8 +39,8 @@ public class HospitalManager {
      * @param filaComum Instância da Fila de 2 Pilhas para triagem comum.
      * @param uti Instância da Tabela Hash para pacientes internados.
      */
-    public HospitalManager(AVLTree<Paciente> prontuarios, Heap<Paciente> filaEmergencia,
-                           Quack<Paciente> filaComum, HashTable<String, Paciente> uti) {
+    public HospitalManager(AVLTree<Paciente> prontuarios, MaxHeap<Paciente> filaEmergencia,
+                           Quack<Paciente> filaComum, HashTable<Paciente> uti) {
         this.prontuarios = prontuarios;
         this.filaEmergencia = filaEmergencia;
         this.filaComum = filaComum;
@@ -70,10 +72,10 @@ public class HospitalManager {
      */
     public Paciente chamarProximo() {
         // Tenta atender emergência (se for a vez dela E não estiver vazia)
-        if (proximoPrioridade && !filaEmergencia.isEmpty()) {
+        if (proximoPrioridade && filaEmergencia.size() > 0) {
             System.out.println("Chamando próximo paciente da fila de prioridade");
             proximoPrioridade = false; // Próximo será comum
-            return filaEmergencia.extractMax();
+            return filaEmergencia.remove();
         }
 
         // Se chegou aqui, ou era a vez do comum, ou a emergência estava vazia
@@ -84,10 +86,10 @@ public class HospitalManager {
         }
 
         // Correção do Bug: A fila comum estava vazia, mas ainda tem gente na emergência!
-        if (!filaEmergencia.isEmpty()) {
+        if (filaEmergencia.size() > 0) {
             System.out.println("Chamando próximo paciente da fila de prioridade");
             proximoPrioridade = true;
-            return filaEmergencia.extractMax();
+            filaEmergencia.remove();
         }
 
         return null; // Hospital totalmente vazio
@@ -95,22 +97,30 @@ public class HospitalManager {
 
     /**
      * Realiza a busca do histórico clínico de um paciente no banco de dados principal.
-     * @param p Paciente (contendo o CPF) a ser buscado.
+     * @param nome Nome do paciente.
+     * @param cpf CPF do paciente.
      * @return O registro completo do paciente localizado na AVL.
      */
 
-    // No caso, a procura não seria por CPF?
-    public Paciente consultarHistorico(Paciente p) {
-        return prontuarios.search(p);
+    /*
+    o compareTo da classe Paciente organiza as pessoas na árvore pelo NOME primeiro, e só usa o CPF para desempatar nomes iguais.
+    Por causa disso, é impossível buscar um paciente na AVL usando APENAS o CPF.
+    A árvore vai se perder. Para buscar na AVL, você precisa passar um paciente "falso" que tenha o mesmo Nome e o mesmo CPF da pessoa que você quer achar.
+     */
+    public Paciente consultarHistorico(String nome, String cpf) {
+        // Cria um paciente de mentira só para a árvore conseguir descer nos nós comparando nome/cpf
+        Paciente pacienteBusca = new Paciente(nome, cpf, NivelUrgencia.AZUL);
+        return prontuarios.searchData(pacienteBusca);
     }
+
 
     /**
      * Move um paciente para o regime de internação crítica na UTI para monitoramento constante.
      * @param p Paciente a ser internado.
      */
     public void internarPaciente(Paciente p) {
-        // O CPF do paciente é a chave para o acesso instantâneo O(1)
-        uti.put(p.getCpf(), p);
+        // Insere o paciente diretamente. A HashTable usará o p.hashCode() que já calcula via CPF!
+        uti.insert(p);
     }
 
     /**
@@ -119,6 +129,10 @@ public class HospitalManager {
      * @param cpf CPF do paciente a ser removido da UTI.
      */
     public void darAltaUti(String cpf) {
-        uti.remove(cpf);
+        // Como o método remove agora exige um objeto do tipo T (Paciente),
+        // criamos um paciente falso contendo o CPF para a Hash conseguir calcular o índice e comparar.
+        Paciente pacienteDummy = new Paciente("", cpf, NivelUrgencia.AZUL);
+        uti.remove(pacienteDummy);
     }
+
 }

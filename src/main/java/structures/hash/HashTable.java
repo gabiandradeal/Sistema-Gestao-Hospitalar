@@ -54,7 +54,7 @@ public class HashTable<T> implements Table<T> {
     @Override
     public boolean isFull() {
         for (LinkedList<T> bucket : table) {
-            if (!bucket.isEmpty()) return false;
+            if (bucket.isEmpty()) return false; // Se tiver UM espaço vazio, ela não está cheia.
         }
         return true;
     }
@@ -82,23 +82,21 @@ public class HashTable<T> implements Table<T> {
     }
 
     @Override
-    public T remove(T element)
-    {
+    public T remove(T element) {
         LinkedList<T> bucket = table.get(hashFunction(element.hashCode()));
-        int bucketSize = bucket.size();
         NodeLinked<T> currentNode = bucket.getHead();
-        T item = currentNode.getData();
 
-        for (int i = 0; i < bucketSize; i++)
-        {
+        // Percorre a lista de forma segura: só entra no laço se o nó existir (verificação null)
+        while (currentNode != null) {
+            T item = currentNode.getData();
             if (item.equals(element)) {
                 bucket.remove(item);
                 return item;
             }
+            // Avança para o próximo nó
             currentNode = currentNode.getNext();
-            item = currentNode.getData();
         }
-        return null;
+        return null; // Retorna null se não encontrar o elemento
     }
 
     @Override
@@ -117,45 +115,41 @@ public class HashTable<T> implements Table<T> {
         return bucket.search(element);
     }
 
-    
     @Override
-    public int indexOf(T element)
-    {
+    public int indexOf(T element) {
         LinkedList<T> bucket = table.get(hashFunction(element.hashCode()));
-        int bucketSize = bucket.size();
         NodeLinked<T> currentNode = bucket.getHead();
-        T item = currentNode.getData();
 
-        for (int i = 0; i <bucketSize; i++)
-        {
-            if (item.equals(element)) return hashFunction(element.hashCode());
+        // Percorre a lista de forma segura (verificação null)
+        while (currentNode != null) {
+            T item = currentNode.getData();
+            if (item.equals(element)) {
+                return hashFunction(element.hashCode());
+            }
+            // CORREÇÃO: Antes faltava isso aqui
+            currentNode = currentNode.getNext();
         }
-        return -1;
+        return -1; // Retorna -1 se não achar
     }
 
     @Override
     public void rehash() {
         // Cria a nova table que vai ter os antigos "pombos".
-        // Multiplica por 2 pq se n vai que tu faz o rehash todinho só pra aumentar o tamanaho de 11 pra 13. Num compensa.
+        // Multiplica por 2 pq se n vai que tu faz o rehash todinho só pra aumentar o tamanho de 11 pra 13. Num compensa.
         HashTable<T> newHashTable = new HashTable<T>(nextPrime(capacity * 2));
 
-        for (LinkedList<T> bucket : table)
-        {
-            int bucketSize = bucket.size();
+        for (LinkedList<T> bucket : table) {
             NodeLinked<T> currentNode = bucket.getHead();
-            T item = currentNode.getData();
-        
-            for (int i = 0; i < bucketSize; i++)
-            {
-                newHashTable.insert(item);
+
+            // Percorre a lista de forma segura transferindo os elementos
+            while (currentNode != null) {
+                newHashTable.insert(currentNode.getData());
                 currentNode = currentNode.getNext();
-                item = currentNode.getData();
             }
         }
 
         this.table = newHashTable.table;
         this.capacity = newHashTable.capacity();
-        return;
     }
 
     // Verifica se um número é primo
@@ -176,8 +170,8 @@ public class HashTable<T> implements Table<T> {
     // Método auxiliar para o rehashing
     private int nextPrime(int current) {
         // Se for par, já pula pro próximo ímpar para agilizar
-        int next = (current % 2 == 0) ? current + 1 : current; 
-        
+        int next = (current % 2 == 0) ? current + 1 : current;
+
         while (!isPrime(next)) {
             next += 2; // Testa apenas os ímpares
         }

@@ -45,6 +45,26 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return search(node.getRight(), element);
     }
 
+    // ==========================================
+    // NOVO MÉTODO: BUSCA RETORNANDO O DADO LIMPO
+    // ==========================================
+    /**
+     * Busca um elemento na árvore e retorna apenas o dado (T).
+     * Ideal para ser usado pelo HospitalManager, encapsulando a complexidade do BSTNode.
+     */
+    public T searchData(T element) {
+        // Chama a busca normal que você já programou acima
+        BSTNode<T> node = this.search(element);
+
+        // Verifica se a busca retornou um nó nulo ou um nó sentinela (NILL)
+        if (node == null || node.isEmpty()) {
+            return null; // Não encontrou
+        }
+
+        return node.getData();
+    }
+
+
     @Override
     public void insert(T element){
         if(element == null) return;
