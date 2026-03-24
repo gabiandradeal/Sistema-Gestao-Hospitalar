@@ -4,7 +4,6 @@ import model.NivelUrgencia;
 import model.Paciente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import structures.queue.Quack;
 import structures.stack.LinkedStack;
 
 import static org.junit.jupiter.api.Assertions.*;
