@@ -55,6 +55,15 @@ public class HospitalManager {
     /**
      * Admite um paciente no sistema, registrando-o no prontuário geral e encaminhando-o
      * para a fila de espera correta baseada na triagem.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     *  <li><b>Prontuário (Árvore AVL):</b> O(log n) — Inserção ou balanceamento do registro no banco principal.</li>
+     *  <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a fração de pacientes graves que estão na Max-Heap de Emergência — Inserção e reordenação (shift up) caso o paciente seja Vermelho ou Laranja.</li>
+     *  <li><b>Fila Comum (Quack):</b> Θ(1) — Apenas um {@code push} na Pilha 1 de entrada (constante), caso a urgência seja menor.</li>
+     *  <li><b>Custo Total Dominante:</b> O(log n) — A operação mais custosa (AVL) define o tempo assintótico geral do método.</li>
+     * </ul>
      * @param p Objeto Paciente a ser admitido.
      */
     public void admitirPaciente(Paciente p) {
@@ -108,7 +117,7 @@ public class HospitalManager {
      */
 
     /*
-    o compareTo da classe Paciente organiza as pessoas na árvore pelo NOME primeiro, e só usa o CPF para desempatar nomes iguais.
+    O compareTo da classe Paciente organiza as pessoas na árvore pelo NOME primeiro, e só usa o CPF para desempatar nomes iguais.
     Por causa disso, é impossível buscar um paciente na AVL usando APENAS o CPF.
     A árvore vai se perder. Para buscar na AVL, você precisa passar um paciente "falso" que tenha o mesmo Nome e o mesmo CPF da pessoa que você quer achar.
      */
