@@ -67,6 +67,10 @@ public class Main {
                     break;
 
                 case 4:
+                    listarPacientes(manager);
+                    break;
+
+                case 5:
                     gerenciarUTI(scanner, manager);
                     break;
 
@@ -91,7 +95,8 @@ public class Main {
         System.out.println("1. Admitir Paciente (Cadastro e Triagem)");
         System.out.println("2. Chamar Próximo (Fluxo de Atendimento)");
         System.out.println("3. Consultar Prontuário (Busca AVL)");
-        System.out.println("4. Gestão da UTI (Acesso Rápido Hash)");
+        System.out.println("4. Listar Pacientes (Ordem Alfabética)");
+        System.out.println("5. Gestão da UTI (Acesso Rápido Hash)");
         System.out.println("0. Sair");
         System.out.print("Sua escolha: ");
     }
@@ -168,6 +173,43 @@ public class Main {
             System.out.println(resultado.toString());
         }
     }
+
+    /**
+     * Lista todos os pacientes cadastrados no histórico do sistema em ordem alfabética. Mesmo com o casting individual, o custo assintótico se mantém
+     * @param manager Gerenciador do sistema.
+     */
+    private static void listarPacientes(HospitalManager manager) {
+        System.out.println("\n📋 --- Lista Geral de Pacientes (A-Z) ---");
+
+        /*
+         * ⚠️ SOLUÇÃO PARA A LIMITAÇÃO DE ARRAYS GENÉRICOS NO JAVA
+         * Por que Object[] e não Paciente[]?
+         * Devido ao "Type Erasure" (Apagamento de Tipos), a Árvore AVL é forçada a
+         * criar um array de Comparable[] internamente, pois o Java proíbe `new T[]`.
+         * Se o Main tentasse receber isso como Paciente[], a Máquina Virtual do Java (JVM)
+         * explodiria um ClassCastException por tentar converter a estrutura do array inteiro.
+         * Receber como Object[] (que é a classe "Mãe" de todas) evita a quebra do sistema.
+         */
+        Object[] lista = manager.listarPacientesOrdemAlfabetica();
+
+        // Verifica se a árvore está vazia (array nulo ou tamanho 0)
+        if (lista == null || lista.length == 0) {
+            System.out.println("ℹ️ Nenhum paciente registrado no prontuário do hospital até o momento.");
+        } else {
+            // Percorre o array e imprime o nome e CPF de cada paciente
+            for (Object obj : lista) {
+                    /*
+                     * O PULO DO 😺: O Cast Individual
+                     * O Java proíbe o cast da "caixa" (o Array inteiro), mas permite o cast dos itens de forma individual
+                     * Como sabemos que o Manager só insere Pacientes na árvore, nós garantimos o cast seguro (Paciente) obj para acessar os métodos.
+                     */
+                Paciente p = (Paciente) obj; // Transforma o Object em Paciente
+                System.out.println(" - " + p.getNome() + " (CPF: " + p.getCpf() + ")");
+            }
+        }
+        System.out.println("-----------------------------------------");
+    }
+
     /**
      * Gerencia a busca e monitoramento de pacientes internados na UTI.
      * @param sc Scanner para leitura de dados.

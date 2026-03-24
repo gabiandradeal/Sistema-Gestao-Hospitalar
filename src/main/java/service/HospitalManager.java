@@ -6,8 +6,10 @@ import structures.avl.*;
 import structures.bst.BSTNode;
 import structures.hash.*;
 import structures.heap.*;
-import structures.linked.list.NodeLinked;
 import structures.queue.*;
+
+import java.util.List;
+import java.util.Objects;
 // Não posso usar 'import structures.*;' por não pegar subpacotes
 
 
@@ -114,6 +116,29 @@ public class HospitalManager {
         // Cria um paciente de mentira só para a árvore conseguir descer nos nós comparando nome/cpf
         Paciente pacienteBusca = new Paciente(nome, cpf, NivelUrgencia.AZUL);
         return prontuarios.searchData(pacienteBusca);
+    }
+
+    /**
+     * Retorna um array com todos os pacientes registrados no prontuários ordenados alfabeticamente pelo nome.
+     * @return Array genérico (Object[]) contendo os pacientes.
+     */
+    public Object[] listarPacientesOrdemAlfabetica() {
+
+        /*
+         * ⚠️ SOLUÇÃO PARA O PROBLEMA DE TYPE ERASURE (ClassCastException)
+         * * Por limitação do Java, a BST não consegue fazer `new T[]`. Ela cria um
+         * `new Comparable[]` e o disfarça de `T[]`. Se chamarmos `prontuarios.Order()`
+         * diretamente, o compilador tentará converter o array inteiro para `Paciente[]`
+         * de forma invisível, o que causa um ClassCastException fatal na execução.
+         * * O Truque (Raw Type):
+         * Ao atribuir a árvore a uma variável "bruta" (sem a tipagem <Paciente>),
+         * nós desativamos esse cast invisível e destrutivo do compilador. Assim,
+         * recebemos a caixa "crua" e a retornamos como Object[] em segurança.
+         * O cast para Paciente será feito elemento por elemento com segurança no Main.
+         */
+        AVLTree arvoreBruta = prontuarios;
+
+        return (Object[]) arvoreBruta.Order();
     }
 
 

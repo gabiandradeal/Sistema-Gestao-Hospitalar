@@ -45,7 +45,6 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return search(node.getRight(), element);
     }
 
-    // ==========================================
     // NOVO MÉTODO: BUSCA RETORNANDO O DADO LIMPO
     // ==========================================
     /**
