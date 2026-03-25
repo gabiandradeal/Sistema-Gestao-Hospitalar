@@ -62,7 +62,7 @@ public class HospitalManager {
      *  <li><b>Prontuário (Árvore AVL):</b> O(log n) — Inserção ou balanceamento do registro no banco principal.</li>
      *  <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a fração de pacientes graves que estão na Max-Heap de Emergência — Inserção e reordenação (shift up) caso o paciente seja Vermelho ou Laranja.</li>
      *  <li><b>Fila Comum (Quack):</b> Θ(1) — Apenas um {@code push} na Pilha 1 de entrada (constante), caso a urgência seja menor.</li>
-     *  <li><b>Custo Total Dominante:</b> O(log n) — A operação mais custosa (AVL) define o tempo assintótico geral do método.</li>
+     *  <li><b>Custo Total Dominante:</b> O(log n) — A operação mais custosa (AVL) define o tempo assintótico geral.</li>
      * </ul>
      * @param p Objeto Paciente a ser admitido.
      */
@@ -81,7 +81,15 @@ public class HospitalManager {
     /**
      * Gerencia a chamada do próximo paciente, alternando entre emergência e comum
      * para não travar o fluxo, mas garantindo o atendimento se uma das filas esvaziar.
-     * @return O próximo paciente a ser atendido
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a quantidade de pacientes graves aguardando — Remoção da raiz (paciente mais grave) e rebaixamento do último nó (shift down) para reordenar a heap.</li>
+     * <li><b>Fila Comum (Quack):</b> Amortizado O(1) / Pior caso O(k) sendo k a quantidade de pacientes leves aguardando — A remoção ocorre em tempo constante na maioria das vezes, mas exige O(k) caso a pilha de saída esteja vazia e precise inverter todos os elementos da pilha de entrada.</li>
+     * <li><b>Custo Total Dominante:</b> Variável — O(log m) se a chamada for da prioridade, ou Amortizado O(1) se a chamada for da fila comum.</li>
+     * </ul>
+     * * @return O próximo paciente a ser atendido, ou null caso o hospital esteja vazio.
      * @since 1.0
      */
     public Paciente chamarProximo() {
@@ -99,7 +107,7 @@ public class HospitalManager {
             return filaComum.dequeue();
         }
 
-        // Correção do Bug: A fila comum estava vazia, mas ainda tem gente na emergência!
+        // Correção do Bug: A fila comum estava vazia, mas ainda tem gente na emergência
         if (filaEmergencia.size() > 0) {
             System.out.println("Chamando próximo paciente da fila de prioridade");
             proximoPrioridade = true;
