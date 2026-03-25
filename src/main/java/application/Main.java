@@ -143,13 +143,24 @@ public class Main {
 
         System.out.println("📢 ATENDIMENTO: " + p.getNome() + " [Urgência: " + p.getUrgencia() + "]");
         System.out.print("O paciente requer internação na UTI? (S/N): ");
-        if (sc.nextLine().equalsIgnoreCase("S")) {
+
+        // Lê a resposta, remove espaços em branco acidentais e joga para maiúsculo
+        String resposta = sc.nextLine().trim().toUpperCase();
+
+        // VALIDAÇÃO: Prende o usuário até ele digitar S ou N
+        while (!resposta.equals("S") && !resposta.equals("N")) {
+            System.out.print("⚠️ Entrada inválida! Digite 'S' para internar ou 'N' para liberar: ");
+            resposta = sc.nextLine().trim().toUpperCase();
+        }
+
+        if (resposta.equals("S")) {
             manager.internarPaciente(p);
             System.out.println("🚨 Paciente internado na UTI para monitoramento.");
         } else {
             System.out.println("🏠 Paciente liberado com orientações médicas.");
         }
     }
+
 
     /**
      * Busca informações históricas do paciente no prontuário eletrônico.
