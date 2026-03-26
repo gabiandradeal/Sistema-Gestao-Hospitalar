@@ -64,7 +64,13 @@ public class HashTable<T> implements Table<T> {
      * AND bit a bit com 0x7FFFFFFF (valor máximo de um inteiro positivo), evitando
      * problemas com números negativos. Em seguida, aplica o operador módulo para
      * obter um índice válido dentro do tamanho da table.</p>
-     * Custo Theta(1) -> O(1), Omega(1).
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Operação Matemática:</b> Θ(1) — Operações elementares bit a bit e módulo executadas instantaneamente</li>
+     * <li><b>Custo Total Dominante:</b> Θ(1) — O tempo de execução é constante e independe do volume de dados</li>
+     * </ul>
      * @param k a chave inteira a ser transformada em índice de hash
      * @return o índice de hash calculado, garantidamente entre 0 e {@code capacity - 1}
      */
@@ -76,7 +82,14 @@ public class HashTable<T> implements Table<T> {
      * Determina se a table de hash está cheia.
      * Essa função considera que a table está cheia quando há pelo menos um elemento em cada "balde" da table.
      * <strong>Esta função não depende do número total de elementos na table, mas sim da distribuição dos elementos entre os baldes.</strong>
-     * Custo assintótico: Theta(1)
+     <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Percorrer Baldes:</b> O(C) no pior caso, sendo C a capacidade (capacity) — O laço verifica balde por balde até achar um vazio</li>
+     * <li><b>Melhor Caso:</b> Ω(1) — Encontra um balde vazio logo na primeira iteração (índice 0).</li>
+     * <li><b>Custo Total Dominante:</b> O(C) — Escala linearmente com o tamanho do array base.</li>
+     * </ul>
      * @return {@code true} se a table estiver cheia, {@code false} caso contrário.
      */
     //
@@ -91,7 +104,14 @@ public class HashTable<T> implements Table<T> {
     /**
      * Determina se a tabela hash está vazia.
      * <strong> Importante: esta função verifica se todos os baldes estão vazios, e não se um balde individual está vazio</strong>
-     * Custo assintótico: Theta(1) -> O(1), Omega(1)
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Percorrer Baldes:</b> O(C) no pior caso (tabela vazia), onde C é a capacidade — O laço precisa verificar todas as posições</li>
+     * <li><b>Melhor Caso:</b> Ω(1) — Encontra um elemento logo na primeira iteração (índice 0) e já retorna false.</li>
+     * <li><b>Custo Total Dominante:</b> O(C) — Limitado ao tamanho total do array de listas.</li>
+     * </ul>
      * @return {@code true} se a tabela estiver vazia, {@code false} caso contrário.
      */
     @Override
@@ -104,7 +124,12 @@ public class HashTable<T> implements Table<T> {
 
     /**
      * Retorna o tamanho (ou capacidade) da tabela hash.
-     * Custo assintótico: Theta(1) -> O(1), Omega(1)
+     <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Retorno de Variável:</b> Θ(1) — Acesso direto e constante</li>
+     * </ul>
      * @return a capacidade da tabela.
      */
     @Override public int capacity() {
@@ -113,8 +138,14 @@ public class HashTable<T> implements Table<T> {
 
     /**
      * Retorna o número de elementos na tabela hash.
-     * Custo assintótico: Theta(n), onde n é o número de elementos na tabela.
-     * Ressaltando: Theta significa que os limites assintóticos O e Omega se coincidem.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Iteração nos Baldes:</b> Θ(C) onde C é a capacidade do array.</li>
+     * <li><b>Soma dos Tamanhos:</b> O(1) por balde.</li>
+     * <li><b>Custo Total Dominante:</b> Θ(C) — Devido à necessidade de verificar todos os baldes da estrutura.</li>
+     * </ul>
      * @return o número de elementos na tabela.
      */
     @Override
@@ -129,12 +160,16 @@ public class HashTable<T> implements Table<T> {
 
     /**
      * Remove um elemento da tabela hash.
-     * Custo assintótico: O(m) onde m é o tamanho da linkedlist (chamada de balde) localizada no código hash dado pelo 
-     * elemento que será removido. No pior caso, se todos os elementos caírem no mesmo balde, o custo pode chegar a O(n) 
-     * onde n é o número total de elementos na tabela. O melhor caso é Omega(1), quando o primeiro elemento no balde corresponde
-     * ao elemento a ser removido.
-     * Na hash table, frequentemente o custo de remoção é considerado como custo amortizado O(1), já que a ideia da tabela hash
-     * é justamente separar o máximo de elementos em vários baldes diferentes.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Cálculo do Hash:</b> Θ(1) — Localização instantânea do balde correspondente.</li>
+     * <li><b>Busca/Remoção no Balde:</b> O(m) no pior caso, sendo m o tamanho da LinkedList interna resultante de colisões.</li>
+     * <li><b>Pior Caso Absoluto:</b> O(n) — Se um desequilíbrio severo fizesse todos os n elementos caírem no mesmo balde.</li>
+     * <li><b>Melhor Caso:</b> Ω(1) — Elemento a ser removido é o primeiro da fila no balde.</li>
+     * <li><b>Custo Total Dominante (Amortizado):</b> O(1) — Em uma HashTable com bom fator de carga e distribuição uniforme.</li>
+     * </ul>
      * @param element o elemento a ser removido.
      * @return o elemento removido ou null se não encontrado.
      */
@@ -157,11 +192,14 @@ public class HashTable<T> implements Table<T> {
 
     /**
      * Insere um elemento na tabela hash.
-     * Custo assintótico: O(m) onde m é o tamanho da linkedlist (chamada de balde) localizada no código hash dado pelo 
-     * elemento que será inserido. No pior caso, se todos os elementos caírem no mesmo balde, o custo pode chegar a O(n) 
-     * onde n é o número total de elementos na tabela. O melhor caso é Omega(1), quando o elemento é inserido no início do balde.
-     * Na hash table, frequentemente o custo de inserção é considerado como custo amortizado O(1), já que a ideia da tabela hash
-     * é justamente separar o máximo de elementos em vários baldes diferentes.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Cálculo do Hash:</b> Θ(1) — Acesso direto ao balde do array.</li>
+     * <li><b>Inserção na Lista:</b> O(1) ou O(m) dependendo da estrutura interna da LinkedList.</li>
+     * <li><b>Custo Total Dominante (Amortizado):</b> O(1) — A inserção ocorre quase instantaneamente na maioria dos casos.</li>
+     * </ul>
      * @param element o elemento a ser inserido.
      * @return void;
      */
@@ -175,10 +213,14 @@ public class HashTable<T> implements Table<T> {
 
     /**
      * Busca um elemento na tabela hash.
-     * Custo assintótico: O(m) onde m é o tamanho da linkedlist (chamada de balde) localizada no código hash dado pelo 
-     * elemento que será buscado. No pior caso, se todos os elementos caírem no mesmo balde, o custo pode chegar a O(n) 
-     * onde n é o número total de elementos na tabela. O melhor caso é Omega(1), quando o primeiro elemento no balde corresponde
-     * ao elemento a ser buscado.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Cálculo do Hash e Acesso:</b> Θ(1).</li>
+     * <li><b>Busca Linear no Balde:</b> O(m) no pior caso daquela lista específica.</li>
+     * <li><b>Custo Total Dominante (Amortizado):</b> O(1) — A separação de elementos corta drasticamente o custo de busca.</li>
+     * </ul>
      * @param element o elemento a ser buscado.
      * @return true se o elemento for encontrado, false caso contrário.
      */
@@ -191,7 +233,12 @@ public class HashTable<T> implements Table<T> {
 
     /**
      * Busca o elemento T correspondendo à chave/hashes do objeto fornecido no bucket correto.
-     * Custo assintótico: O(m) onde m é o tamanho da linkedlist (chamada de balde) pelo mesmo motivo do método search(T element).
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Idêntico ao search comum:</b> O(m) no pior caso regional, ou amortizado O(1).</li>
+     * </ul>
      * @see #search(Object)
      * @param element elemento cuja chave hash será usada para localizar o bucket.
      * @return o objeto encontrado (mesmo objeto da tabela) ou null se não encontrado.
@@ -215,7 +262,12 @@ public class HashTable<T> implements Table<T> {
     /**
      * Pega o índice do elemento na tabela hash, ou -1 se não encontrado. Funciona de forma semelhante ao search(T element), 
      * mas retorna o índice do elemento dentro do balde (linked list) em vez de um booleano.
-     * Custo assintótico: O(m) onde m é o tamanho da linkedlist (chamada de balde) pelo mesmo motivo do método search(T element).
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Acesso ao Balde e Busca:</b> O(m) no pior caso, onde m é o tamanho da LinkedList interna percorrida. Amortizado O(1).</li>
+     * </ul>
      * @see #search(Object)
      * @param element o elemento a ser buscado.
      * @return o índice do elemento na tabela hash, -1 se não encontrado.
@@ -239,7 +291,16 @@ public class HashTable<T> implements Table<T> {
     }
 
     /** 
-     * Faz o rehashing da tabela, recriando 
+     * Faz o rehashing da tabela, criando um array com capacidade expandida para o próximo numero
+     * primo do dobro atual.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Alocação Nova e Cálculos Primos:</b> O(C_novo) + Custo de Primalidade.</li>
+     * <li><b>Redistribuição:</b> Θ(n) — Percorre e reinsere todos os n elementos armazenados na tabela.</li>
+     * <li><b>Custo Total Dominante:</b> Θ(n) — Apesar de ser uma operação pesada (linear), ela ocorre esporadicamente (custo amortizado diluído).</li>
+     * </ul>
      * 
     */
     @Override
@@ -252,8 +313,10 @@ public class HashTable<T> implements Table<T> {
             NodeLinked<T> currentNode = bucket.getHead();
 
             // Percorre a lista de forma segura transferindo os elementos
-            while (currentNode != null) {
-                newHashTable.insert(currentNode.getData());
+            while (currentNode != null && !currentNode.isNIL()) {
+                if (currentNode.getData() != null) {
+                    newHashTable.insert(currentNode.getData());
+                }
                 currentNode = currentNode.getNext();
             }
         }
@@ -265,6 +328,12 @@ public class HashTable<T> implements Table<T> {
     /**
      * Verifica se um número é primo. Método auxiliar para o rehashing.
      * Garantindo que a nova capacidade seja um número primo, a distribuição dos elementos ocorre de forma que minimize colisões.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Busca Otimizada:</b> O(√num) — Corta a necessidade de divisão pela metade ao iterar apenas até a raiz quadrada matemática do número.</li>
+     * </ul>
      * @param num o numéro que será checado se é primo ou não.
      * @return true se o número for primo, false caso contrário.
      */
@@ -284,6 +353,12 @@ public class HashTable<T> implements Table<T> {
      * Encontra o menor número primo após o valor "current".
      * <strong> Importante: Retorna Interger.MAX_VALUE se o próximo primo ultrapassar o limite máximo de int, para evitar overflow.</strong>
      * Método auxiliar para o rehashing.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+     * <li><b>Busca de Gap:</b> O(g * √num) no pior caso — Onde g é a distância (gap) até o próximo primo, checando a primalidade em cada tentativa</li>
+     * </ul>
      * @param current o valor inicial.
      * @return o próximo número primo.
      */
