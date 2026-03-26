@@ -74,6 +74,10 @@ public class Main {
                     gerenciarUTI(scanner, manager);
                     break;
 
+                case 6:
+                    exibirRelatorio(manager);
+                    break;
+
                 case 0:
                     System.out.println("Encerrando o sistema hospitalar... Até logo!");
                     break;
@@ -95,9 +99,10 @@ public class Main {
         System.out.println("1. Admitir Paciente (Cadastro e Triagem)");
         System.out.println("2. Chamar Próximo (Fluxo de Atendimento)");
         System.out.println("3. Consultar Prontuário (Busca AVL)");
-        System.out.println("4. Listar Pacientes (Ordem Alfabética)");
+        System.out.println("4. Listar Pacientes Cadastrados (Ordem Alfabética)");
         System.out.println("5. Gestão da UTI (Acesso Rápido Hash)");
-        System.out.println("0. Sair");
+        System.out.println("6. Relatório Geral");
+        System.out.println("0. Sair\n");
         System.out.print("Sua escolha: ");
     }
 
@@ -139,7 +144,7 @@ public class Main {
             while (!respSintoma.equals("S") && !respSintoma.equals("N")) {
                 System.out.print("Paciente apresenta sintomas? (S/N): ");
                 respSintoma = sc.nextLine().trim().toUpperCase();
-                
+
                 if (!respSintoma.equals("S") && !respSintoma.equals("N")) {
                     System.out.println("⚠️ Opção inválida! Digite 'S' para Sim ou 'N' para Não.");
                 }
@@ -163,8 +168,8 @@ public class Main {
             }
 
             System.out.println("Cores da Triagem: 1-AZUL, 2-VERDE, 3-AMARELO, 4-LARANJA, 5-VERMELHO");
-            
-            int nivel = -1; 
+
+            int nivel = -1;
             boolean nivelValido = false;
 
             // Este while garante que o sistema não saia daqui até ter um número de 1 a 5
@@ -275,11 +280,11 @@ public class Main {
         } else {
             // Percorre o array e imprime o nome e CPF de cada paciente
             for (Object obj : lista) {
-                    /*
-                     * O PULO DO 😺: O Cast Individual
-                     * O Java proíbe o cast da "caixa" (o Array inteiro), mas permite o cast dos itens de forma individual
-                     * Como sabemos que o Manager só insere Pacientes na árvore, nós garantimos o cast seguro (Paciente) obj para acessar os métodos.
-                     */
+                /*
+                 * O PULO DO 😺: O Cast Individual
+                 * O Java proíbe o cast da "caixa" (o Array inteiro), mas permite o cast dos itens de forma individual
+                 * Como sabemos que o Manager só insere Pacientes na árvore, nós garantimos o cast seguro (Paciente) obj para acessar os métodos.
+                 */
                 Paciente p = (Paciente) obj; // Transforma o Object em Paciente
                 System.out.println(" - " + p.getNome() + " (CPF: " + p.getCpf() + ")");
             }
@@ -303,4 +308,16 @@ public class Main {
             System.out.println("✅ Paciente removido da unidade de monitoramento.");
         }
     }
+
+
+
+    /**
+     * Exibe o relatório estatístico geral do hospital consultando o tamanho das estruturas.
+     * @param manager Gerenciador do sistema.
+     */
+    private static void exibirRelatorio(HospitalManager manager) {
+        // O Manager já devolve a string montada
+        System.out.println(manager.gerarRelatorioGeral());
+    }
+
 }
