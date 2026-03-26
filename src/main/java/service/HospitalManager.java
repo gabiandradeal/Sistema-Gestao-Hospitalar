@@ -120,6 +120,15 @@ public class HospitalManager {
 
     /**
      * Realiza a busca do histórico clínico de um paciente no banco de dados principal.
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     * <ul>
+        * <li><b>Busca (Árvore AVL):</b> O(log n) - A eficiência da busca balanceada garante tempo logarítmico.</li>
+        * <li><b>Criação de Objeto:</b> O(1) - Instanciação de um objeto temporário para comparação.</li>
+        * <li>Custo Total Dominante:</b> O(log n) - O tempo de pesquisa na estrutura de dados prevalece.</li>
+     * </ul>
+     * 
      * @param nome Nome do paciente.
      * @param cpf CPF do paciente.
      * @return O registro completo do paciente localizado na AVL.
