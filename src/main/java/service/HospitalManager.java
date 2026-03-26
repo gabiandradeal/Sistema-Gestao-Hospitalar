@@ -12,14 +12,23 @@ import java.util.List;
 import java.util.Objects;
 // Não posso usar 'import structures.*;' por não pegar subpacotes
 
-
 /**
- * Classe responsável pela integração das estruturas de dados e gerenciamento do fluxo hospitalar.
- * Atua como o "Cérebro" do sistema, coordenando a triagem, atendimento e internação.
- * @author Gabriela
- * @version 1.0
- * @since 12/03
- */
+* 🧠 <b>HospitalManager (Cérebro do Sistema - Padrão Facade)</b>
+* <br>
+* Esta classe centraliza a inteligência do hospital, integrando estruturas distintas 
+* para garantir que o fluxo do paciente seja otimizado de acordo com sua gravidade.
+* <br>
+* <br>
+* <p><b>📈 Custo Global do Fluxo (End-to-End)</b></p>
+* <ul>
+    * <li><b>🔴 FLUXO PACIENTE GRAVE (Emergência):</b> O(log n) + O(log m) — O sistema realiza uma inserção balanceada na AVL (Prontuário) e um "shift-up" na Max-Heap. O custo dominante permanece <b>O(log n)</b>, garantindo atendimento ultra-rápido para casos críticos.</li>
+    * <li><b>🟢 FLUXO PACIENTE COMUM (Geral):</b> O(log n) + Θ(1) — O paciente é registrado na AVL e inserido na Fila de 2 Pilhas (Quack). Como a inserção na fila comum é constante, o custo global é ditado pela AVL: <b>O(log n)</b>.</li>
+    * <li><b>🏥 INTERNAÇÃO E ALTA (UTI):</b> O(1) Médio / O(n) Pior Caso — A transição para a UTI via Tabela Hash permite acesso instantâneo em cenários de baixa colisão. Em um cenário teórico de colisão total, o custo degrada para linear O(n) devido à busca na lista encadeada.</li>
+* </ul>
+* @author Gabriela
+* @version 1.2
+* @since 12/03
+*/
 public class HospitalManager {
 
     /** Flag para garantir alternância entre atendimento da fila comum e da prioridade */
