@@ -1,31 +1,35 @@
 ## 🏥 Sistema de Gestão Hospitalar
 Projeto desenvolvido para a disciplina de Estrutura de Dados.
-Nosso sistema não é apenas um código isolado; ele simula a vida real. Usamos a AVL para busca eficiente, a Hash para o estoque, e a Heap para salvar vidas priorizando quem mais precisa, enquanto a Fila de duas pilhas organiza o fluxo burocrático da triagem.
+Nosso sistema não é apenas um código isolado; ele simula a vida real. Usamos a **AVL** para o prontuário geral, a **Hash** para a gestão crítica da UTI, e a **Heap** para priorizar emergências, enquanto a **Fila de duas pilhas** organiza o fluxo da triagem comum. O diferencial está no gerenciamento inteligente que alterna entre as filas para evitar a espera infinita de casos leves (Starvation).
 
 ## ⚙️ Núcleo do Sistema
 O projeto foi estruturado para que cada operação hospitalar utilize a estrutura de dados mais eficiente para o seu propósito:
-###  Fila (Baseada em 2 Pilhas)
-* **Função:** Organiza o fluxo burocrático da triagem e recepção.
-* **Implementação:** Seguindo os requisitos, a fila é composta por duas instâncias de Pilha, onde cada **Pilha** é construída sobre uma **Lista Simplesmente Encadeada** customizada.
+
+###  Fila (Baseada em 2 Pilhas - Quack)
+* **Função:** Organiza o fluxo de pacientes com quadros leves (Azul/Verde).
+* **Implementação:** Composta por duas instâncias de Pilha sobre **Lista Simplesmente Encadeada**. Utiliza uma lógica de transferência entre pilhas para garantir a ordem FIFO (First-In, First-Out) de forma eficiente.
 
 ###  Árvore AVL (BST Balanceada)
-* **Função:** Busca eficiente e organizada de prontuários de pacientes.
-* **Implementação:** Árvore Binária de Busca com **rotações automáticas** (LL, RR, LR, RL), garantindo que a altura permaneça sempre em $O(\log n)$, mesmo com milhares de cadastros.
+* **Função:** Armazenamento e busca de prontuários históricos via Nome e CPF.
+* **Implementação:** Árvore Binária de Busca com **rotações automáticas** (LL, RR, LR, RL), garantindo que a altura permaneça em $O(\log n)$ e as buscas sejam sempre rápidas e estáveis.
 
 ###  Heap Binária (Max-Heap)
-* **Função:** Fila de prioridades que "salva vidas" ao processar emergências.
-* **Implementação:** Garante que o paciente com maior nível de risco (maior chave) seja sempre o próximo a ser atendido, independentemente da ordem de chegada.
+* **Função:** Fila de prioridades para pacientes em estado crítico (Vermelho/Laranja).
+* **Implementação:** Garante que o paciente com maior urgência clínica seja movido para o topo da estrutura através de operações de *shift-up* e *shift-down* em $O(\log n)$, independentemente da ordem de chegada.
 
 ###  Tabela Hash (Chaining)
-* **Função:** Controle instantâneo do estoque de medicamentos.
-* **Implementação:** Utiliza uma função de espalhamento para acesso em tempo constante $O(1)$. Eventuais colisões de índices são resolvidas através de **encadeamento lateral** (chaining) com listas.
-  
+* **Função:** Gestão de leitos e acesso imediato a pacientes internados na **UTI**.
+* **Implementação:** Utiliza o CPF como chave para acesso imediato. Eventuais colisões são resolvidas através de **encadeamento lateral** com listas encadeadas, garantindo integridade nos dados críticos.
+
 ## 📊 Análise de Complexidade
 
-| Estrutura | Função Principal | Complexidade (Pior Caso) |
-| :--- | :--- | :--- |
-| **Lista Encadeada** | Base para Pilha/Fila | $O(1)$ para inserção no topo |
-| **Fila (2 Pilhas)** | Fluxo de Triagem | $O(1)$ (Amortizado) |
-| **Árvore AVL** | Busca de Pacientes | $O(\log n)$ |
-| **Heap Binária** | Prioridade de Risco | $O(\log n)$ |
-| **Tabela Hash** | Estoque de Remédios | $O(1)$ médio |
+| Estrutura | Função Principal | Complexidade (Tempo) | Nota Técnica |
+| :--- | :--- | :--- | :--- |
+| **Lista Encadeada** | Base para Pilha/Fila | $O(1)$ | Inserção/Remoção constante no topo. |
+| **Quack (2 Pilhas)** | Triagem Geral | $O(1)$ Amortizado | Eficiência constante na maioria das operações. |
+| **Árvore AVL** | Prontuário Geral | $O(\log n)$ | Custo logarítmico garantido pelo balanceamento. |
+| **Heap Binária** | Fila de Emergência | $O(\log n)$ | Reordenação baseada na altura da árvore completa. |
+| **Tabela Hash** | Unidade de UTI | $O(1)$ Médio | Acesso direto via Hash (Pior caso teórico $O(n)$). |
+
+---
+*Desenvolvido como parte do projeto integrador de Estrutura de Dados - UEPB.*
