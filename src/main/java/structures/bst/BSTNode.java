@@ -1,11 +1,19 @@
 package structures.bst;
 
+/**
+ * Classe genérida para um nó de uma Árvore Binária de Busca (BST).
+ * Armazena o dado, referências para o filho à esquerda e à direita.
+ * @author Horlan
+ * @version 1.0
+ * @since 16/03
+ */
+
 public class BSTNode<T> {
 
     private T data;
-    private BSTNode<T> left;
-    private BSTNode<T> right;
-    private BSTNode<T> parent;
+    private BSTNode<T> left; // Subárvore com valores menores
+    private BSTNode<T> right; // Subárvore com valores maiores
+    private BSTNode<T> parent; // Referência para o nó superior (pai)
 
     public BSTNode(){};
 
@@ -49,8 +57,12 @@ public class BSTNode<T> {
         return data == null;
     }
 
+    /**
+     * @return A string "NILL" se o nó for uma folha sentinela,
+     * ou uma representação textual do valor contido no nó
+     */
     @Override
     public String toString(){
-        return data == null ? "NILL": data.toString();
+        return data == null ? "NIL": data.toString();
     }
 }

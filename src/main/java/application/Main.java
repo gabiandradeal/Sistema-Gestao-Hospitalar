@@ -74,6 +74,10 @@ public class Main {
                     gerenciarUTI(scanner, manager);
                     break;
 
+                case 6:
+                    exibirRelatorio(manager);
+                    break;
+
                 case 0:
                     System.out.println("Encerrando o sistema hospitalar... Até logo!");
                     break;
@@ -95,9 +99,10 @@ public class Main {
         System.out.println("1. Admitir Paciente (Cadastro e Triagem)");
         System.out.println("2. Chamar Próximo (Fluxo de Atendimento)");
         System.out.println("3. Consultar Prontuário (Busca AVL)");
-        System.out.println("4. Listar Pacientes (Ordem Alfabética)");
+        System.out.println("4. Listar Pacientes Cadastrados (Ordem Alfabética)");
         System.out.println("5. Gestão da UTI (Acesso Rápido Hash)");
-        System.out.println("0. Sair");
+        System.out.println("6. Relatório Geral");
+        System.out.println("0. Sair\n");
         System.out.print("Sua escolha: ");
     }
 
@@ -107,26 +112,92 @@ public class Main {
      * @param manager Gerenciador do sistema.
      */
     private static void admitirNovoPaciente(Scanner sc, HospitalManager manager) {
-        System.out.print("Nome completo: ");
-        String nome = sc.nextLine();
-        System.out.print("CPF (somente números): ");
-        String cpf = sc.nextLine();
+        try {
+            // --- BLOCO DO NOME ---
+            String nome = "";
+            while (nome.isEmpty()) {
+                System.out.print("Nome completo: ");
+                nome = sc.nextLine().trim();
+                if (nome.isEmpty()) {
+                    System.out.println("⚠️ Erro: O nome é obrigatório para o prontuário.");
+                }
+            }
 
-        System.out.println("Cores da Triagem: 1-AZUL, 2-VERDE, 3-AMARELO, 4-LARANJA, 5-VERMELHO");
-        System.out.print("Selecione a cor baseada na urgência (1-5): ");
-        int nivel = Integer.parseInt(sc.nextLine());
+            // --- BLOCO DO CPF ---
+            String cpf = "";
+            while (cpf.isEmpty() || !cpf.matches("\\d{11}")) {
+                System.out.print("CPF (somente números): ");
+                cpf = sc.nextLine().trim();
+                if (cpf.isEmpty()) {
+                    System.out.println("⚠️ Erro: O CPF é obrigatório.");
+                } else if (!cpf.matches("\\d{11}")) {
+                    System.out.println("⚠️ Erro: CPF Inválido.");
+                    cpf = ""; // Reseta para continuar no loop
+                }
+            }
 
-        // Adicionando verificação para impedir erro de Index
-        while (nivel < 1 || nivel > 5) {
-            System.out.println("⚠️ Nível inválido! Definindo como AZUL por padrão.");
-            nivel = Integer.parseInt(sc.nextLine());
+            // --- BLOCO DE SINTOMAS ---
+            String[] listaSintomas;
+            String respSintoma = "";
+
+            // Garante que o usuário só saia daqui digitando S ou N
+            while (!respSintoma.equals("S") && !respSintoma.equals("N")) {
+                System.out.print("Paciente apresenta sintomas? (S/N): ");
+                respSintoma = sc.nextLine().trim().toUpperCase();
+
+                if (!respSintoma.equals("S") && !respSintoma.equals("N")) {
+                    System.out.println("⚠️ Opção inválida! Digite 'S' para Sim ou 'N' para Não.");
+                }
+            }
+
+            if (respSintoma.equals("S")) {
+                String entradaSintomas = "";
+                // While opcional: obriga a descrever algo se ele disse que TEM sintomas
+                while (entradaSintomas.isEmpty()) {
+                    System.out.print("Descreva os sintomas (separe por vírgula): ");
+                    entradaSintomas = sc.nextLine().trim();
+                    if (entradaSintomas.isEmpty()) {
+                        System.out.println("⚠️ Se o paciente apresenta sintomas, por favor, descreva-os.");
+                    }
+                }
+                // Converte a string em Array
+                listaSintomas = entradaSintomas.split("\\s*,\\s*");
+            } else {
+                // Se respondeu 'N', cria um array padrão
+                listaSintomas = new String[]{"Nenhum sintoma relatado"};
+            }
+
+            System.out.println("Cores da Triagem: 1-AZUL, 2-VERDE, 3-AMARELO, 4-LARANJA, 5-VERMELHO");
+
+            int nivel = -1;
+            boolean nivelValido = false;
+
+            // Este while garante que o sistema não saia daqui até ter um número de 1 a 5
+            while (!nivelValido) {
+                try {
+                    System.out.print("Selecione a cor baseada na urgência (1-5): ");
+                    nivel = Integer.parseInt(sc.nextLine());
+
+                    if (nivel >= 1 && nivel <= 5) {
+                        nivelValido = true;
+                    } else {
+                        System.out.println("⚠️ Nível inválido! Escolha um número entre 1 e 5.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("⚠️ Erro: Por favor, digite apenas NÚMEROS.");
+                }
+            }
+            // Agora temos certeza que o nível é válido
+            NivelUrgencia urgencia = NivelUrgencia.values()[nivel - 1];
+            Paciente novo = new Paciente(nome, cpf, urgencia, listaSintomas);
+
+            manager.admitirPaciente(novo);
+            System.out.println("\n✅ Paciente admitido e encaminhado conforme nível: " + urgencia);
+
+        } catch (Exception e) {
+            // Este catch final evita que qualquer erro inesperado feche o sistema
+            System.out.println("⚠️ Ocorreu um erro inesperado: " + e.getMessage());
         }
-        NivelUrgencia urgencia = NivelUrgencia.values()[nivel - 1];
-
-        Paciente novo = new Paciente(nome, cpf, urgencia);
-
-        manager.admitirPaciente(novo);
-        System.out.println("\n✅ Paciente admitido e encaminhado conforme nível: " + urgencia);
     }
 
     /**
@@ -209,11 +280,11 @@ public class Main {
         } else {
             // Percorre o array e imprime o nome e CPF de cada paciente
             for (Object obj : lista) {
-                    /*
-                     * O PULO DO 😺: O Cast Individual
-                     * O Java proíbe o cast da "caixa" (o Array inteiro), mas permite o cast dos itens de forma individual
-                     * Como sabemos que o Manager só insere Pacientes na árvore, nós garantimos o cast seguro (Paciente) obj para acessar os métodos.
-                     */
+                /*
+                 * O PULO DO 😺: O Cast Individual
+                 * O Java proíbe o cast da "caixa" (o Array inteiro), mas permite o cast dos itens de forma individual
+                 * Como sabemos que o Manager só insere Pacientes na árvore, nós garantimos o cast seguro (Paciente) obj para acessar os métodos.
+                 */
                 Paciente p = (Paciente) obj; // Transforma o Object em Paciente
                 System.out.println(" - " + p.getNome() + " (CPF: " + p.getCpf() + ")");
             }
@@ -237,4 +308,16 @@ public class Main {
             System.out.println("✅ Paciente removido da unidade de monitoramento.");
         }
     }
+
+
+
+    /**
+     * Exibe o relatório estatístico geral do hospital consultando o tamanho das estruturas.
+     * @param manager Gerenciador do sistema.
+     */
+    private static void exibirRelatorio(HospitalManager manager) {
+        // O Manager já devolve a string montada
+        System.out.println(manager.gerarRelatorioGeral());
+    }
+
 }
