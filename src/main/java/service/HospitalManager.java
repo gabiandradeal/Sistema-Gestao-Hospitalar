@@ -59,10 +59,10 @@ public class HospitalManager {
      * <br>
      * <p><b>📈 Custo Assintótico</b></p>
      * <ul>
-     *  <li><b>Prontuário (Árvore AVL):</b> O(log n) — Inserção ou balanceamento do registro no banco principal.</li>
-     *  <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a fração de pacientes graves que estão na Max-Heap de Emergência — Inserção e reordenação (shift up) caso o paciente seja Vermelho ou Laranja.</li>
-     *  <li><b>Fila Comum (Quack):</b> Θ(1) — Apenas um {@code push} na Pilha 1 de entrada (constante), caso a urgência seja menor.</li>
-     *  <li><b>Custo Total Dominante:</b> O(log n) — A operação mais custosa (AVL) define o tempo assintótico geral.</li>
+         *  <li><b>Prontuário (Árvore AVL):</b> O(log n) — Inserção ou balanceamento do registro no banco principal.</li>
+         *  <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a fração de pacientes graves que estão na Max-Heap de Emergência — Inserção e reordenação (shift up) caso o paciente seja Vermelho ou Laranja.</li>
+         *  <li><b>Fila Comum (Quack):</b> Θ(1) — Apenas um {@code push} na Pilha 1 de entrada (constante), caso a urgência seja menor.</li>
+         *  <li><b>Custo Total Dominante:</b> O(log n) — A operação mais custosa (AVL) define o tempo assintótico geral.</li>
      * </ul>
      * @param p Objeto Paciente a ser admitido.
      */
@@ -85,9 +85,10 @@ public class HospitalManager {
      * <br>
      * <p><b>📈 Custo Assintótico</b></p>
      * <ul>
-     * <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a quantidade de pacientes graves aguardando — Remoção da raiz (paciente mais grave) e rebaixamento do último nó (shift down) para reordenar a heap.</li>
-     * <li><b>Fila Comum (Quack):</b> Amortizado O(1) / Pior caso O(k) sendo k a quantidade de pacientes leves aguardando — A remoção ocorre em tempo constante na maioria das vezes, mas exige O(k) caso a pilha de saída esteja vazia e precise inverter todos os elementos da pilha de entrada.</li>
-     * <li><b>Custo Total Dominante:</b> Variável — O(log m) se a chamada for da prioridade, ou Amortizado O(1) se a chamada for da fila comum.</li>
+         * <li><b>Fila de Emergência (Max-Heap):</b> O(log m) sendo m a quantidade de pacientes graves aguardando — Remoção da raiz (paciente mais grave) e rebaixamento do último nó (shift down) para reordenar a heap.</li>
+         * <li><b>Fila Comum (Quack):</b> Amortizado O(1) / Pior caso O(k) sendo k a quantidade de pacientes leves aguardando — A remoção ocorre em tempo constante na maioria das vezes, mas exige O(k) caso a pilha de saída esteja vazia e precise inverter todos os elementos da pilha de entrada.</li>
+         *
+         * <li><b>Custo Total Dominante:</b> Variável — O(log m) se a chamada for da prioridade, ou Amortizado O(1) se a chamada for da fila comum.</li>
      * </ul>
      * * @return O próximo paciente a ser atendido, ou null caso o hospital esteja vazio.
      * @since 1.0
@@ -178,6 +179,32 @@ public class HospitalManager {
         // criamos um paciente falso contendo o CPF para a Hash conseguir calcular o índice e comparar.
         Paciente pacienteDummy = new Paciente("", cpf, NivelUrgencia.AZUL);
         uti.remove(pacienteDummy);
+    }
+
+    /**
+     * Gera um relatório contendo o número atual de pacientes
+     * distribuídos nas diferentes estruturas de dados do hospital (Quantidade de pacientes cadastrados, quantidade de pacientes na fila comum, fila de emergência e UTI)
+     * <br>
+     * <br>
+     * <p><b>📈 Custo Assintótico</b></p>
+     *
+     * <ul>
+         * <li><b>Fila de Emergência (Max-Heap):</b> O(1) — A estrutura mantém uma variável interna (size) atualizada a cada inserção/remoção, permitindo retorno imediato.</li>
+         * <li><b>Fila Comum (Quack):</b> O(k) sendo k os pacientes aguardando — O método percorre recursivamente todos os nós presentes nas listas encadeadas das 2 pilhas.</li>
+         * <li><b>UTI (Tabela Hash):</b> O(B + u) sendo B o tamanho do array (buckets) e u os pacientes na UTI — É necessário iterar sobre a tabela inteira e percorrer recursivamente cada Linked List.</li>
+         * <li><b>Prontuários (Árvore AVL):</b> O(n) sendo n o total de pacientes já registrados — O cálculo é feito de forma recursiva, visitando cada nó da árvore individualmente para somar 1.</li>
+         *
+         * <li><b>Custo Total Dominante:</b> O(n) — Como a AVL contém todos os pacientes já registrados (maior volume de dados), a varredura completa dessa estrutura impõe o tempo de execução linear para a geração do relatório.</li>
+     * </ul>
+     * @return String formatada com os dados consolidados.
+     */
+    public String gerarRelatorioGeral() {
+        return "\n📊 --- RELATÓRIO GERAL DO HOSPITAL ---\n" +
+                "📚 Total de Pacientes Registrados (AVL): " + prontuarios.size() + "\n" +
+                "🚨 Aguardando na Fila de Emergência (Max-Heap): " + filaEmergencia.size() + "\n" +
+                "🛋️ Aguardando na Fila Comum (Quack): " + filaComum.size() + "\n" +
+                "🛏️ Pacientes Internados na UTI (Hash): " + uti.size() + "\n" +
+                "--------------------------------------";
     }
 
 }
