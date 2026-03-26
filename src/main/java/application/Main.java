@@ -300,7 +300,23 @@ public class Main {
     private static void gerenciarUTI(Scanner sc, HospitalManager manager) {
         System.out.print("CPF do paciente internado (Busca O(1)): ");
         String cpf = sc.nextLine();
+
+        //checa se o cpf só tem números ou se tem exatamente 11 dígitos, se não tiver, pede para digitar novamente
+        while (!cpf.matches("\\d{11}")) {
+            System.out.print("⚠️ CPF inválido. Tente novamente: ");
+            cpf = sc.nextLine();
+        }
+
         System.out.println("📍 Localizando paciente na unidade crítica...");
+        Paciente p = manager.consultarPaciente(cpf);
+
+        if (p == null) {
+            System.out.println("⚠️ Paciente não encontrado na UTI.");
+            return;
+        }
+
+        System.out.println("✅ Paciente encontrado na UTI:");
+        System.out.println(p.toString());
 
         System.out.print("Deseja dar alta desta unidade? (S/N): ");
         if (sc.nextLine().equalsIgnoreCase("S")) {

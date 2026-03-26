@@ -366,13 +366,13 @@ public class HashTable<T> implements Table<T> {
         if (current < 2) {
             return 2;
         }
-        // Esse ternário cehca se é par. Se sim, já pula pro próximo ímpar para agilizar
+        // Esse ternário checa se é par. Se sim, já pula pro próximo ímpar para agilizar
         int next = (current % 2 == 0) ? current + 1 : current;
 
         while (!isPrime(next)) {
             next += 2; // Testa apenas os ímpares
 
-            if (current >= Integer.MAX_VALUE - 2) return current; // Evita overflow, retorna o valor atual se ultrapassar o limite máximo de int
+            if (current >= Integer.MAX_VALUE - 10) return Integer.MAX_VALUE - 1; // Evita overflow, retorna o valor atual se ultrapassar o limite máximo de int
         }
         return next;
     }

@@ -179,6 +179,18 @@ public class HospitalManager {
     }
 
     /**
+     * Busca um paciente internado na UTI usando o CPF para acesso rápido.
+     * @param cpf CPF do paciente a ser consultado.
+     * @return O paciente encontrado na UTI, ou null caso não esteja internado.
+     */
+    public Paciente consultarPaciente(String cpf)
+    {
+        // Cria um dummy para a hash table da uti conseguir calcular a posição correta e comparar os objetos.
+        Paciente pacienteDummy = new Paciente("", cpf, NivelUrgencia.AZUL);
+        return uti.searchByKey(pacienteDummy);
+    }
+
+    /**
      * Finaliza o monitoramento na UTI, removendo o paciente da tabela de acesso rápido
      * após alta ou óbito.
      * @param cpf CPF do paciente a ser removido da UTI.
