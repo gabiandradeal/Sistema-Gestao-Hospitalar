@@ -94,6 +94,26 @@ public class HashTableTest {
     }
 
     /**
+     * Testa o método searchByKey, que deve usar hash e equals (CPF em Paciente) para encontrar o item.
+     * @see HashTable#searchByKey(Object)
+     * @since 1.0
+     */
+    @Test
+    void testSearchByKey() {
+        uti.insert(p1);
+        uti.insert(p2);
+
+        Paciente buscaValida = new Paciente("OutroNome", "111.111.111-11", NivelUrgencia.AMARELO);
+        Paciente resultado = uti.searchByKey(buscaValida);
+
+        assertNotNull(resultado, "Deve encontrar o paciente pelo CPF mesmo com nome diferente.");
+        assertEquals(p1, resultado, "Retorna o objeto da tabela com CPF igual.");
+
+        Paciente buscaInvalida = new Paciente("NaoExiste", "999.999.999-99", NivelUrgencia.AMARELO);
+        assertNull(uti.searchByKey(buscaInvalida), "CPF inexistente retorna null.");
+    }
+
+    /**
      * Testa o rehash da tabela, verificando se a capacidade foi expandida corretamente para o próximo número primo
      * e se os dados continuaram armazenados corretamente
      * @see HashTable#rehash()

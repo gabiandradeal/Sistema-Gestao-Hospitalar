@@ -1,5 +1,9 @@
 package structures.hash;
 
+/**
+ * Interface genérica que define as operações básicas para uma tabela hash.
+ * @param <T> o tipo de elementos armazenados na tabela hash
+ */
 public interface Table<T> {
     public boolean isEmpty();
     public boolean isFull();
