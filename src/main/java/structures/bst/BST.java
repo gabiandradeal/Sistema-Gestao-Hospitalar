@@ -3,45 +3,89 @@ package structures.bst;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementação genérica de uma Árvore Binária de Busca (BST).
+ * Servirá de base para a implementação de uma AVL.
+ * @author Horlan
+ * @version 1.0
+ * @since 16/03
+ */
+
 public class BST<T extends Comparable <T>> implements Tree<T>{
 
     protected BSTNode<T> root;
 
+    /**
+     * Construtor padrão que inicializa a árvore com um nó sentinela vazio.
+     */
     public BST(){
         root = new BSTNode<T>();
     }
 
+    /**
+     * Verifica se a árvore está vazia a partir da raiz.
+     * @return true se a raiz for um nó vazio e false caso contrário.
+     */
     @Override
     public boolean isEmpty(){
         return root.isEmpty();
     }
 
+    /**
+     * Calcula a altura total da árvore a partir da raiz.
+     * @return A altura total da árvore, chamando o método auxiliar recursivo.
+     * @since 1.0
+     */
     @Override
     public int height(){
         return height(root);
     }
 
+    /**
+     * Método auxiliar que calcula a altura de um nó de forma recursiva.
+     * Adota a convenção de altura -1 para nós nulos ou vazios e 0 para folhas.
+     * @param node O nó a partir do qual a altura será calculada.
+     * @return a altura do nó informado a partir da subárvore esquerda e direita.
+     * @since 1.0
+     */
     protected int height(BSTNode<T> node){
         if(node == null || node.isEmpty()) return -1;
 
         return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
     }
 
+    /**
+     * Busca um elemento na árvore a partir da raiz.
+     * @param element O valor a ser procurado.
+     * @return O nó contendo o elemento ou o um nó vazio (sentinela) caso não seja encontrado.
+     * @since 1.0
+     */
     @Override
     public BSTNode<T> search(T element){
         return search(root, element);
     }
 
+    /**
+     * Método auxiliar recursivo para busca de um elemento.
+     * @param node O nó atual da recursão.
+     * @param element O valor buscado
+     * @return O nó encontrado ou o nó sentinela onde a busca se encerrou.
+     * @since 1.0
+     */
     protected BSTNode<T> search(BSTNode<T> node, T element){
 
+        // Se o nó for vazio (sentinela), o elemento não está na árvore.
         if(node.isEmpty()) return node;
 
         int compare = element.compareTo(node.getData());
 
+        // Se o elemento for igual ao dado do nó atual, nó encontrado.
         if(compare == 0) return node;
 
+        // Se o elemento for menor que o dado do nó atual, a busca se dará na subárvore esquerda
         if(compare < 0) return search(node.getLeft(), element);
-
+        
+        // Caso contrário (se o elemento for maior), a busca se dará na subárvore direita.
         return search(node.getRight(), element);
     }
 
@@ -63,7 +107,11 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return node.getData();
     }
 
-
+    /**
+     * Insere um novo elemento na árvore.
+     * @param element O valor a ser inserido.
+     * @since 1.0
+     */
     @Override
     public void insert(T element){
         if(element == null) return;
@@ -71,11 +119,23 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         insert(root, element);
     }
 
+    /**
+     * Método auxiliar recursivo para a inserção de um elemento.
+     * @param node O nó atual da recursão.
+     * @param element O valor a ser inserido.
+     * @since 1.0
+     */
     protected void insert(BSTNode<T> node, T element){
+
+        // Se o nó atual for vazio, encontra-se a posição de inserção.
         if(node.isEmpty()){
             node.setData(element);
+
+            // Inicializa os filhos como novo nós sentinelas (vazios).
             node.setLeft(new BSTNode<T>());
             node.setRight(new BSTNode<T>());
+
+            // Define o nó atual como pai dos novos nós sentinelas. 
             node.getLeft().setParent(node);
             node.getRight().setParent(node);
         } 
