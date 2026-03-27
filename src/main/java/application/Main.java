@@ -215,7 +215,7 @@ public class Main {
         System.out.println("📢 ATENDIMENTO: " + p.getNome() + " [Urgência: " + p.getUrgencia() + "]");
         System.out.print("O paciente requer internação na UTI? (S/N): ");
 
-        // Lê a resposta, remove espaços em branco acidentais e joga para maiúsculo
+        // Lê a resposta, remove espaços em branco e joga para maiúsculo
         String resposta = sc.nextLine().trim().toUpperCase();
 
         // VALIDAÇÃO: Prende o usuário até ele digitar S ou N
@@ -301,7 +301,7 @@ public class Main {
         System.out.print("CPF do paciente internado (Busca O(1)): ");
         String cpf = sc.nextLine();
 
-        //checa se o cpf só tem números ou se tem exatamente 11 dígitos, se não tiver, pede para digitar novamente
+        // Checa se o cpf só tem números ou se tem exatamente 11 dígitos, se não tiver, pede para digitar novamente
         while (!cpf.matches("\\d{11}")) {
             System.out.print("⚠️ CPF inválido. Tente novamente: ");
             cpf = sc.nextLine();
@@ -319,12 +319,21 @@ public class Main {
         System.out.println(p.toString());
 
         System.out.print("Deseja dar alta desta unidade? (S/N): ");
-        if (sc.nextLine().equalsIgnoreCase("S")) {
+        String resposta = sc.nextLine().trim().toUpperCase();
+
+        // Prende o usuário até ele digitar S ou N
+        while (!resposta.equals("S") && !resposta.equals("N")) {
+            System.out.print("⚠️ Entrada inválida! Digite 'S' para confirmar a alta ou 'N' para manter na UTI: ");
+            resposta = sc.nextLine().trim().toUpperCase();
+        }
+
+        if (resposta.equals("S")) {
             manager.darAltaUti(cpf);
             System.out.println("✅ Paciente removido da unidade de monitoramento.");
+        } else {
+            System.out.println("ℹ️ Alta cancelada. O paciente permanece na UTI.");
         }
     }
-
 
 
     /**

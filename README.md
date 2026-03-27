@@ -21,6 +21,12 @@ O projeto foi estruturado para que cada operação hospitalar utilize a estrutur
 * **Função:** Gestão de leitos e acesso imediato a pacientes internados na **UTI**.
 * **Implementação:** Utiliza o CPF como chave para acesso imediato. Eventuais colisões são resolvidas através de **encadeamento lateral** com listas encadeadas, garantindo integridade nos dados críticos.
 
+## 🔄 Fluxo de Funcionamento
+
+O sistema opera através de uma interface interativa de terminal (CLI), oferecendo 6 operações principais que cobrem toda a jornada do paciente — desde a admissão e triagem até o desfecho clínico e internação na UTI.
+Para compreender visualmente, o fluxo geral do software pode ser observado com mais detalhes no nosso [Diagrama de Atividades](assets/DiagramaDeAtividades_SistemaDeGestaoHospitalar.png) desenvolvido segundo o padrão UML 2.
+
+
 ## 📊 Análise de Complexidade
 
 | Estrutura | Função Principal | Complexidade (Tempo) | Nota Técnica |
