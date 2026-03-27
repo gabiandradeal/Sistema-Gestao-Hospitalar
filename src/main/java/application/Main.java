@@ -321,7 +321,7 @@ public class Main {
         System.out.print("Deseja dar alta desta unidade? (S/N): ");
         String resposta = sc.nextLine().trim().toUpperCase();
 
-        // Prende o usuário até ele digitar S ou N
+        // 4Prende o usuário até ele digitar S ou N
         while (!resposta.equals("S") && !resposta.equals("N")) {
             System.out.print("⚠️ Entrada inválida! Digite 'S' para confirmar a alta ou 'N' para manter na UTI: ");
             resposta = sc.nextLine().trim().toUpperCase();
