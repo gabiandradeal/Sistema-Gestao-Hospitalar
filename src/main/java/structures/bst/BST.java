@@ -148,6 +148,11 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         }
     }
 
+    /**
+     * Remove um elemento da árvore.
+     * @param element O valor a ser removido
+     * @since 1.0
+     */
     @Override
     public void remove(T element){
         BSTNode<T> node = search(element);
@@ -157,17 +162,27 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         }
     }
 
+    /**
+     * Método auxiliar recursivo para a remoção física de um elemento, tratando
+     * os casos de folha, com um filho ou com dois filhos (usando o predecessor).
+     * @param node O nó a ser removido.
+     * @since 1.0
+     */
     protected void remove(BSTNode<T> node){
+        
+        // Verifica se o nó é folha
         if(node.getLeft().isEmpty() && node.getRight().isEmpty()){
             node.setData(null);
             node.setLeft(null);
             node.setRight(null);
         }
 
+        // Verifica se o nó tem apenas um filho
         else if(node.getLeft().isEmpty() || node.getRight().isEmpty()){
 
             BSTNode<T> child;
 
+            // Identifica qual dos lados possui o filho
             if(!node.getLeft().isEmpty()){
                 child = node.getLeft();
             }
@@ -175,25 +190,41 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
                 child = node.getRight();
             }
 
+            // Puxa os dados do filho para o nó atual (pai)
             node.setData(child.getData());
             node.setRight(child.getRight());
             node.setLeft(child.getLeft());
          }
 
+         // Verifica se o nó tem dois filhos
          else{
 
+            // Busca o predecessor para assumir a posição do nó a ser removido
             BSTNode<T> predecessor = maximum(node.getLeft());
             node.setData(predecessor.getData());
+
+            // Remove recursivamente o nó que foi movido para o lugar do atual
             remove(predecessor);
 
          }
     }
 
+    /**
+     * Retorna o nó que contém o maior valor da árvore (extremo direito).
+     * @return O nó com o valor máxino ou um NIL, caso a árvore esteja vazia.
+     * @since 1.0
+     */
     @Override
     public BSTNode<T> maximum(){
         return maximum(root);
     }
 
+    /**
+     * Método auxiliar que busca o nó de maior valor a partir de uma determinada subárvore.
+     * @param node O nó raiz da subárvore onde a busca será iniciada.
+     * @return O nó mais à direita da subárvore informada.
+     * @since 1.0
+     */
     protected BSTNode<T> maximum(BSTNode<T> node){
         if(node.isEmpty()) return node;
 
@@ -204,11 +235,22 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return node;
     }
 
+    /**
+     * Retorna o nó que contém o menor valor da árvore (extremo esquerdo).
+     * @return O nó com o valor mínimo ou um NIL, casoa árvore esteja vazia.
+     * @since 1.0
+     */
     @Override
     public BSTNode<T> minimum(){
         return minimum(root);
     }
 
+    /**
+     * Método auxiliar que busca o nó de menor valor a partir de uma determinada subárvore.
+     * @param node O nó raiz da subárvore onde a busca será iniciada.
+     * @return o nó mais à esquerda da subárvore informada.
+     * @since 1.0
+     */
     protected BSTNode<T> minimum(BSTNode<T> node){
         if(node.isEmpty()) return node;
 
@@ -219,6 +261,11 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return node;
     }
 
+    /**
+     * Realiza o percurso em pré-ordem (pre-order) da BST.
+     * @return Um array contendo os elementos da árvore em pré-ordem.
+     * @since 1.0
+     */
     @Override
     public T[] preOrder(){
         List<T> list = new ArrayList<>();
@@ -226,6 +273,12 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return (T[]) list.toArray(new Comparable[list.size()]);
     }
 
+    /**
+     * Método auxiliar recursivo que realiza o percurso em pré-ordem.
+     * @param node O nó atual da árvore.
+     * @param list A lista onde os elementos visitados serão armazenados.
+     * @since 1.0
+     */
     protected void preOrder(BSTNode<T> node, List<T> list) {
 
         if (!node.isEmpty()) {
@@ -237,6 +290,11 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         }
     }
 
+    /**
+     * Realiza o percurso em ordem (in-order) da BST.
+     * @return Um array contendo os elementos da árvore em ordem crescente.
+     * @since 1.0
+     */
     @Override
     public T[] Order(){
         List<T> list = new ArrayList<>();
@@ -244,6 +302,12 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return (T[]) list.toArray(new Comparable[list.size()]);
     }
 
+    /**
+     * Método auxiliar recursivo que realiza o percuso em ordem.
+     * @param node O nó atual da árvore.
+     * @param list A lista onde os elementos visitados serão armazenados.
+     * @since 1.0
+     */
     protected void Order(BSTNode<T> node, List<T> list) {
 
         if (!node.isEmpty()) {
@@ -255,6 +319,11 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         }
     }
 
+    /**
+     * Realiza o percurso em pós-ordem (post-order) da BST.
+     * @return Um array contendo os elemento da árvore em pós-ordem.
+     * @since 1.0
+     */
     @Override
     public T[] postOrder(){
         List<T> list = new ArrayList<>();
@@ -262,6 +331,12 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         return (T[]) list.toArray(new Comparable[list.size()]);
     }
 
+    /**
+     * Mérodo auxiliar recursivo para realizar o percurso em pós-ordem.
+     * @param node O nó atual da árvore.
+     * @param list A lista onde os elementos visitados serão armazenados.
+     * @since 1.0
+     */
     protected void postOrder(BSTNode<T> node, List<T> list) {
 
         if (!node.isEmpty()) {
@@ -273,11 +348,21 @@ public class BST<T extends Comparable <T>> implements Tree<T>{
         }
     }
 
+    /**
+     * Retorna a quantidade de elementos presentes na árvore.
+     * @return O número total de nós não vazios da árvore.
+     * @since 1.0
+     */
     @Override
     public int size(){
         return size(root);
     }
 
+    /**
+     * Método auxiliar recursivo para calcular o tamanho da árvore.
+     * @param node O nó atual da árvore.
+     * @return A quantidade de nós não vazios na subárvore enraizada.
+     */
     protected int size(BSTNode<T> node){
         if(node.isEmpty()) return 0;
 
