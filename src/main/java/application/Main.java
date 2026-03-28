@@ -143,7 +143,7 @@ public class Main {
             if (pacienteExistente != null) {
                 System.out.println("\nℹ️ O paciente " + pacienteExistente.getNome() + " já possui prontuário no sistema.");
                 System.out.println("O que deseja fazer com este paciente?");
-                System.out.println("⚠️ ATENÇÃO: Use esta opção apenas se o paciente estiver NÃO estiver aguardando atendimento ainda"); // Ou, inevitavelmente vamos criar duplicatas
+                System.out.println("⚠️ ATENÇÃO: Use esta opção apenas se o paciente NÃO estiver aguardando atendimento ainda"); // Ou, inevitavelmente vamos criar duplicatas
                 System.out.println("1 - Nova Triagem (Encaminhar para fila de atendimento)");
                 System.out.println("2 - Internação Direta (Encaminhar para UTI)");
                 System.out.println("0 - Cancelar operação");
