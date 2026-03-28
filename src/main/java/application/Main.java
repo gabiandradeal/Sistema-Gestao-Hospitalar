@@ -55,7 +55,7 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    admitirNovoPaciente(scanner, manager);
+                    admitirPaciente(scanner, manager);
                     break;
 
                 case 2:
@@ -111,7 +111,7 @@ public class Main {
      * @param sc Scanner para leitura de dados.
      * @param manager Gerenciador do sistema.
      */
-    private static void admitirNovoPaciente(Scanner sc, HospitalManager manager) {
+    private static void admitirPaciente(Scanner sc, HospitalManager manager) {
         try {
             // --- BLOCO DO NOME ---
             String nome = "";
@@ -134,6 +134,38 @@ public class Main {
                     System.out.println("⚠️ Erro: CPF Inválido.");
                     cpf = ""; // Reseta para continuar no loop
                 }
+            }
+
+// --- VERIFICAÇÃO DE RETORNO DE PACIENTE ---
+            // Nossa arquitetura assume que readmissões ocorrem para retornos hospitalares, quando o paciente já finalizou o atendimento anterior
+            Paciente pacienteExistente = manager.consultarHistorico(nome, cpf);
+
+            if (pacienteExistente != null) {
+                System.out.println("\nℹ️ O paciente " + pacienteExistente.getNome() + " já possui prontuário no sistema.");
+                System.out.println("O que deseja fazer com este paciente?");
+                System.out.println("⚠️ ATENÇÃO: Use esta opção apenas se o paciente estiver NÃO estiver aguardando atendimento ainda"); // Ou, inevitavelmente vamos criar duplicatas
+                System.out.println("1 - Nova Triagem (Encaminhar para fila de atendimento)");
+                System.out.println("2 - Internação Direta (Encaminhar para UTI)");
+                System.out.println("0 - Cancelar operação");
+                System.out.print("Sua escolha: ");
+                String subOpcao = sc.nextLine().trim();
+
+                if (subOpcao.equals("2")) {
+                    manager.internarPaciente(pacienteExistente);
+                    System.out.println("🚨 Paciente encaminhado diretamente para a UTI de monitoramento.");
+                    return; // Encerra o método aqui, pois já foi para a UTI
+
+                } else if (subOpcao.equals("0")) {
+                    System.out.println("ℹ️ Admissão cancelada.");
+                    return; // Encerra o método e volta pro menu principal
+
+                } else if (!subOpcao.equals("1")) {
+                    System.out.println("⚠️ Opção inválida. Admissão cancelada.");
+                    return;
+                }
+
+                // Se ele digitou "1", o código apenas segue o fluxo natural para baixo
+                System.out.println("\n🔄 Iniciando nova triagem para paciente de retorno...");
             }
 
             // --- BLOCO DE SINTOMAS ---
@@ -189,10 +221,19 @@ public class Main {
             }
             // Agora temos certeza que o nível é válido
             NivelUrgencia urgencia = NivelUrgencia.values()[nivel - 1];
-            Paciente novo = new Paciente(nome, cpf, urgencia, listaSintomas);
 
-            manager.admitirPaciente(novo);
-            System.out.println("\n✅ Paciente admitido e encaminhado conforme nível: " + urgencia);
+            // Verificação de retorno para atualizar os dados ou criar um objeto novo
+            if (pacienteExistente != null) {
+                pacienteExistente.setUrgencia(urgencia);
+                pacienteExistente.setSintomas(listaSintomas);
+                manager.admitirPaciente(pacienteExistente);
+                System.out.println("\n🔄 Registro atualizado! Paciente de retorno encaminhado conforme nível: " + urgencia);
+            } else {
+                // Se for a primeira vez no hospital, aí sim criamos o objeto novo
+                Paciente novo = new Paciente(nome, cpf, urgencia, listaSintomas);
+                manager.admitirPaciente(novo);
+                System.out.println("\n✅ Novo paciente admitido e encaminhado conforme nível: " + urgencia);
+            }
 
         } catch (Exception e) {
             // Este catch final evita que qualquer erro inesperado feche o sistema

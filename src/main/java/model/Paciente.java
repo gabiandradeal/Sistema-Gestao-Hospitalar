@@ -60,13 +60,17 @@ public class Paciente implements Comparable<Paciente> {
     public NivelUrgencia getUrgencia() {
         return urgencia;
     }
+
+    // Necessário adicionar/modificar depois (retorno)
     public void setUrgencia(NivelUrgencia urgencia) {
         this.urgencia = urgencia;
-    } // Caso seja necessário adicionar/modificar depois
+    }
 
     public String[] getSintomas() {
         return sintomas;
     }
+
+    // Necessário adicionar/modificar depois (retorno)
     public void setSintomas(String[] sintomas) {
         this.sintomas = sintomas;
     }
@@ -114,6 +118,7 @@ public class Paciente implements Comparable<Paciente> {
     public int compararPorUrgencia(Paciente outroPaciente) {
         return this.urgencia.compareTo(outroPaciente.getUrgencia());
     }
+
 
     /**
      * 🔗 PARA A TABELA HASH (CHAINING)
