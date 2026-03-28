@@ -13,6 +13,7 @@ public interface Tree<T extends Comparable <T>> {
     public boolean isEmpty();
     public int height();
     public BSTNode<T> search(T element);
+    public T searchData(T element); 
 
     public void insert(T element);
     public void remove(T element);
