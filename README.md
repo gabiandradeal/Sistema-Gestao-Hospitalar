@@ -35,7 +35,7 @@ Para compreender visualmente, o fluxo geral do software pode ser observado com m
 | **Quack (2 Pilhas)** | Triagem Geral | $O(1)$ Amortizado | Eficiência constante na maioria das operações. |
 | **Árvore AVL** | Prontuário Geral | $O(\log n)$ | Custo logarítmico garantido pelo balanceamento. |
 | **Heap Binária** | Fila de Emergência | $O(\log n)$ | Reordenação baseada na altura da árvore completa. |
-| **Tabela Hash** | Unidade de UTI | $O(1)$ Médio | Acesso direto via Hash (Pior caso teórico $O(n)$ ). |
+| **Tabela Hash** | Unidade de UTI | $O(1)$ Médio | Acesso direto via Hash (Pior caso teórico $O(n)$). |
 
 ---
 *Desenvolvido como parte do projeto integrador de Estrutura de Dados - UEPB.*
