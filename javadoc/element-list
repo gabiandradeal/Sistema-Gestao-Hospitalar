@@ -1,0 +1,12 @@
+application
+model
+service
+structures
+structures.avl
+structures.bst
+structures.hash
+structures.heap
+structures.linked.list
+structures.queue
+structures.stack
+utils

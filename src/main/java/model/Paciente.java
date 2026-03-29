@@ -11,8 +11,8 @@ import java.util.Objects;
  * @since 15/03
  */
 public class Paciente implements Comparable<Paciente> {
-    private String nome;
-    private String cpf; // Nosso ID
+    private final String nome;
+    private final String cpf; // Nosso ID
     private NivelUrgencia urgencia;
     private String[] sintomas;
 
@@ -87,7 +87,6 @@ public class Paciente implements Comparable<Paciente> {
      * para garantir que ambos sejam inseridos corretamente na árvore sem sobrescrita.
      * @param outroPaciente o outro paciente a ser comparado com este
      * @return um número negativo, zero ou positivo de acordo com a ordem alfabética
-     * @author Georis
      * @since 3.0
      */
     @Override
@@ -112,8 +111,6 @@ public class Paciente implements Comparable<Paciente> {
      * para o mais grave (VERMELHO = 4), a comparação nativa do Enum já resolve.
      * @param outroPaciente o paciente a ser comparado
      * @return positivo se este for mais grave, negativo se menos grave, 0 se igual
-     * @author Georis
-     * @version 1.0
      */
     public int compararPorUrgencia(Paciente outroPaciente) {
         return this.urgencia.compareTo(outroPaciente.getUrgencia());
@@ -126,8 +123,6 @@ public class Paciente implements Comparable<Paciente> {
      * Garante que não haverá duplicatas de pacientes com o mesmo CPF na lista encadeada.
      * @param o o objeto a ser comparado com este paciente
      * @return true se o objeto for um Paciente com o mesmo CPF, false caso contrário
-     * @author Georis
-     * @version 2.0
      */
     @Override
     public boolean equals(Object o) {
@@ -141,8 +136,6 @@ public class Paciente implements Comparable<Paciente> {
      * 🔗 PARA A TABELA HASH
      * Gera o índice numérico (bucket) na Tabela Hash baseado exclusivamente no CPF do paciente, será usado e aprimorado no objeto do tipo Hash Table.
      * @return o código hash calculado a partir do CPF
-     * @author Georis
-     * @version 2.0
      */
     @Override
     public int hashCode() {
