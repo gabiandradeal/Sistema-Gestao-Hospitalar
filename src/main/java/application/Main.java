@@ -136,7 +136,7 @@ public class Main {
                 }
             }
 
-// --- VERIFICAÇÃO DE RETORNO DE PACIENTE ---
+            // --- VERIFICAÇÃO DE RETORNO DE PACIENTE ---
             // Nossa arquitetura assume que readmissões ocorrem para retornos hospitalares, quando o paciente já finalizou o atendimento anterior
             Paciente pacienteExistente = manager.consultarHistorico(nome, cpf);
 
